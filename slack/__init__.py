@@ -8,7 +8,7 @@ import os
 import datetime
 import six
 from .requests import Requests, HttpForbidden, Auth
-from .rest import Api
+from .rest import FromUrl
 
 __all__ = ('Slack',)
 
@@ -83,7 +83,7 @@ class Slack(object):
         self._requests = _requests(auth=Auth)
 
     def fromurl(self, url, **kwargs):
-        return Api(url, _requests=self._requests)(**kwargs)
+        return FromUrl(url, _requests=self._requests)(**kwargs)
 
     def get_room(self, name, **kwargs):
         kwargs.update({'name': name})   # TODO: Not smart?

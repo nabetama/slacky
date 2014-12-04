@@ -10,7 +10,7 @@ import six
 _url_to_api_object = {}
 
 
-class Api(object):
+class FromUrl(object):
     def __init__(self, url, _requests):
         self.url = url
         self._requests = _requests or __import__('requests')
