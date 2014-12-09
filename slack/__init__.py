@@ -82,12 +82,9 @@ class Slack(object):
     def __init__(self, token):
         self._requests = _requests(auth=Auth)
 
-    def fromurl(self, url, **kwargs):
-        return FromUrl(url, _requests=self._requests)(**kwargs)
+    def fromurl(self, url):
+        return FromUrl(url, _requests=self._requests)()
 
-    def get_room(self, name, **kwargs):
-        kwargs.update({'name': name})   # TODO: Not smart?
-        return self.fromurl('https://slack.com/api/channels.join', **kwargs)
-
-    def apitest(self):
-        return self.fromurl('https://slack.com/api/api.test', pretty=1)
+    @property
+    def api(self):
+        return self.fromurl('https://slack.com/api')

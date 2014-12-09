@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import absolute_import, division
 import json
 import re
@@ -16,12 +18,10 @@ class FromUrl(object):
         self._requests = _requests or __import__('requests')
 
     def __call__(self, **kwargs):
-        params = {}
-        if kwargs:
-            merge_params = {}
-            params.update(merge_params)
-        text = self._requests.get(self.url, params=params).text
-        return json.JSONDecoder().decode(text)
+        for regix, klass in six.iteritems(_url_to_api_object):
+            if regix.match(self.url):
+                return klass(self)  # 自分自身を渡す
+        return None
 
     def get(self, **kwargs):
         self._requests.get(self.url, data=kwargs)
@@ -30,19 +30,26 @@ class FromUrl(object):
         return "<%s url=%r>" % (type(self).__name__, self.url)
 
 
-class RestObject(dict):
+class RestObject(object):
+    def __init__(self, from_url):
+        self.url = from_url.url
+        self._requests = from_url._requests
+
+class Api(RestObject):
+    def __init__(self, from_url):
+        super(Api, self).__init__(from_url)
+
     @property
-    def url(self):
-        return self._requests.url
-
-    def save(self):
-        return self._requests.put(self.url, data=self).json()
-
-    def delete(self):
-        self._requests.delete(self.url)
+    def test(self):
+        return FromUrl('https://slack.com/api/api.test', self._requests)()
+_url_to_api_object[re.compile(r'^https://slack.com/api$')] = Api
 
 
 class ApiTest(RestObject):
-    def __init__(self, *p, **kw):
-        super(ApiTest, self).__init__(*p, **kw)
+    def __init__(self, from_url):
+        super(ApiTest, self).__init__(from_url)
+
+    def get(self, **kwargs):
+        params = kwargs.copy()
+        return self._requests.get(self.url, data=params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
