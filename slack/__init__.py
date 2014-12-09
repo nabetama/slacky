@@ -81,10 +81,15 @@ class _requests(Requests):
 class Slack(object):
     def __init__(self, token):
         self._requests = _requests(auth=Auth)
+        self.token = token
 
-    def fromurl(self, url):
-        return FromUrl(url, _requests=self._requests)()
+    def fromurl(self, url, **kwargs):
+        return FromUrl(url, _requests=self._requests)(**kwargs)
 
     @property
     def api(self):
         return self.fromurl('https://slack.com/api')
+
+    @property
+    def auth(self):
+        return self.fromurl('https://slack.com/api/auth', token=self.token)
