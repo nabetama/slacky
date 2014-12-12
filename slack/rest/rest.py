@@ -39,6 +39,9 @@ class RestObject(object):
     # TODO: self._requests.request のGET, POSTをここでラップしたい
 
 
+# ================================================================================================
+# Api
+# ================================================================================================
 class Api(RestObject):
     @property
     def test(self):
@@ -53,6 +56,9 @@ class ApiTest(RestObject):
 _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
 
 
+# ================================================================================================
+# Auth
+# ================================================================================================
 class Auth(RestObject):
     @property
     def test(self):
@@ -64,3 +70,29 @@ class AuthTest(RestObject):
     def post(self, **kwargs):
         return self._requests.request('POST', self.url, data=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
+
+# ================================================================================================
+# Channels
+# ================================================================================================
+class Channels(RestObject):
+    @property
+    def list(self):
+        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
+
+    def archive(self, channel):
+        if not channel:
+            print 'Input archive channel id.'
+        self.params.update({'channel': channel})
+        return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
+
+class ChannelArchive(RestObject):
+    def post(self, **kwargs):
+        return self._requests.request('POST', self.url, data=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelArchive
+
+class ChannelList(RestObject):
+    def post(self, **kwargs):
+        return self._requests.request('POST', self.url, data=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelList
+
