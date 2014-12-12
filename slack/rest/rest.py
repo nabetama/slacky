@@ -90,6 +90,17 @@ class Channels(RestObject):
             print '[DEBUG] Input name for new channel.'
         self.params.update({'name': name})
         return FromUrl('https://slack.com/api/channels.create', self._requests)(data=self.params)
+
+    def history(self, channel, **kwargs):
+        """ https://api.slack.com/methods/channels.history
+        latest, oldest, count
+        """
+        if not channel:
+            print '[DEBUG] Please input the channel you\'d like to see.'
+        self.params.update({'channel': channel})
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/channels.history', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -103,6 +114,12 @@ class ChannelCreate(RestObject):
     def post(self, **kwargs):
         return self._requests.request('POST', self.url, data=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelCreate
+
+
+class ChannelHistory(RestObject):
+    def post(self, **kwargs):
+        return self._requests.request('POST', self.url, data=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelHistory
 
 
 class ChannelList(RestObject):
