@@ -81,15 +81,29 @@ class Channels(RestObject):
 
     def archive(self, channel):
         if not channel:
-            print 'Input archive channel id.'
+            print '[DEBUG] Input archive channel id.'
         self.params.update({'channel': channel})
         return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
+
+    def create(self, name):
+        if not name:
+            print '[DEBUG] Input name for new channel.'
+        self.params.update({'name': name})
+        return FromUrl('https://slack.com/api/channels.create', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
+
 
 class ChannelArchive(RestObject):
     def post(self, **kwargs):
         return self._requests.request('POST', self.url, data=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelArchive
+
+
+class ChannelCreate(RestObject):
+    def post(self, **kwargs):
+        return self._requests.request('POST', self.url, data=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelCreate
+
 
 class ChannelList(RestObject):
     def post(self, **kwargs):
