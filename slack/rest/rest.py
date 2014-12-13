@@ -123,44 +123,44 @@ class Channels(RestObject):
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
-class ChannelArchive(RestObject):
+class ChannelsArchive(RestObject):
     def post(self, **kwargs):
         return self._requests.post(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelArchive
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelsArchive
 
 
-class ChannelCreate(RestObject):
+class ChannelsCreate(RestObject):
     def post(self, **kwargs):
         return self._requests.post(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelCreate
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelsCreate
 
 
-class ChannelHistory(RestObject):
+class ChannelsHistory(RestObject):
     def get(self, **kwargs):
         return self._requests.get(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelHistory
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelsHistory
 
 
-class ChannelInfo(RestObject):
+class ChannelsInfo(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.info$')] = ChannelInfo
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.info$')] = ChannelsInfo
 
 
-class ChannelInvite(RestObject):
+class ChannelsInvite(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.invite$')] = ChannelInvite
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.invite$')] = ChannelsInvite
 
 
-class ChannelJoin(RestObject):
+class ChannelsJoin(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.join$')] = ChannelJoin
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.join$')] = ChannelsJoin
 
 
-class ChannelList(RestObject):
+class ChannelsList(RestObject):
     def get(self, **kwargs):
         return self._requests.get(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelList
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelsList
 
