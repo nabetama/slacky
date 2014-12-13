@@ -75,10 +75,6 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 # Channels
 # ================================================================================================
 class Channels(RestObject):
-    @property
-    def list(self):
-        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
-
     def archive(self, channel):
         if not channel:
             print '[DEBUG] Input archive channel id.'
@@ -120,6 +116,72 @@ class Channels(RestObject):
             'name': channel,
             })
         return FromUrl('https://slack.com/api/channels.join', self._requests)(data=self.params)
+
+    def kick(self, channel, user):
+        """ https://api.slack.com/methods/channels.kick
+        """
+        self.params.update({
+            'channel':  channel,
+            'user':     user,
+            })
+        return FromUrl('https://slack.com/api/channels.kick', self._requests)(data=self.params)
+
+    def leave(self, channel):
+        """ https://api.slack.com/methods/channels.leave
+        """
+        self.params.update({
+            'channel':  channel,
+            })
+        return FromUrl('https://slack.com/api/channels.leave', self._requests)(data=self.params)
+
+    @property
+    def list(self):
+        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
+
+    def mark(self, channel, ts):
+        """ https://api.slack.com/methods/channels.mark
+        """
+        self.params.update({
+            'channel':  channel,
+            'ts':       ts,
+            })
+        return FromUrl('https://slack.com/api/channels.mark', self._requests)(data=self.params)
+
+    def rename(self, channel, new_name):
+        """ https://api.slack.com/methods/channels.rename
+        """
+        self.params.update({
+            'channel':  channel,
+            'name':     new_name,
+            })
+        return FromUrl('https://slack.com/api/channels.rename', self._requests)(data=self.params)
+
+    def set_purpose(self, channel, purpose):
+        """ https://api.slack.com/methods/channels.setPurpose
+        """
+        self.params.update({
+            'channel': channel,
+            'purpose': purpose,
+            })
+        return FromUrl('https://slack.com/api/channels.setPurpose', self._requests)(data=self.params)
+
+    def set_topic(self, channel, topic):
+        """ https://api.slack.com/methods/channels.setTopic
+        """
+        self.params.update({
+            'channel': channel,
+            'topic': topic,
+            })
+        return FromUrl('https://slack.com/api/channels.setTopic', self._requests)(data=self.params)
+
+    def unarchive(self, channel):
+        """ https://api.slack.com/methods/channels.unarchive
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params)
+
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -159,8 +221,57 @@ class ChannelsJoin(RestObject):
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.join$')] = ChannelsJoin
 
 
+class ChannelsKick(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.kick$')] = ChannelsKick
+
+
+class ChannelsLeave(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = ChannelsLeave
+
+
 class ChannelsList(RestObject):
     def get(self, **kwargs):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelsList
+
+
+class ChannelsLeave(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = ChannelsLeave
+
+
+class ChannelsMark(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.mark$')] = ChannelsMark
+
+
+class ChannelsRename(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.rename$')] = ChannelsRename
+
+
+class ChannelsSetPurpose(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.setPurpose$')] = ChannelsSetPurpose
+
+
+class ChannelsSetTopic(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.setTopic$')] = ChannelsSetTopic
+
+
+class ChannelsUnarchive(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.unarchive$')] = ChannelsUnarchive
+
 
