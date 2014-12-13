@@ -146,6 +146,15 @@ class Channels(RestObject):
             'ts':       ts,
             })
         return FromUrl('https://slack.com/api/channels.mark', self._requests)(data=self.params)
+
+    def rename(self, channel, new_name):
+        """ https://api.slack.com/methods/channels.rename
+        """
+        self.params.update({
+            'channel':  channel,
+            'name':     new_name,
+            })
+        return FromUrl('https://slack.com/api/channels.rename', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -213,5 +222,11 @@ class ChannelsMark(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.mark$')] = ChannelsMark
+
+
+class ChannelsRename(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.rename$')] = ChannelsRename
 
 
