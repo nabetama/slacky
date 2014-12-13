@@ -36,8 +36,6 @@ class RestObject(object):
         self._requests = from_url._requests
         self.params = kwargs.copy()
 
-    # TODO: self._requests.request のGET, POSTをここでラップしたい
-
 
 # ================================================================================================
 # Api
@@ -181,7 +179,6 @@ class Channels(RestObject):
             'channel': channel,
             })
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params)
-
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -275,3 +272,55 @@ class ChannelsUnarchive(RestObject):
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.unarchive$')] = ChannelsUnarchive
 
 
+# ================================================================================================
+# Chat
+# ================================================================================================
+class Chat(RestObject):
+    def delete(self, channel, ts):
+        """ https://api.slack.com/methods/chat.delete
+        """
+        self.params.update({
+            'channel': channel,
+            'ts':      ts,
+            })
+        return FromUrl('https://slack.com/api/chat.delete', self._requests)(data=self.params)
+
+    def post_message(self, channel, text, **kwargs):
+        """ https://api.slack.com/methods/chat.postMessage
+        """
+        self.params.update({
+            'channel': channel,
+            'text':    text,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/chat.postMessage', self._requests)(data=self.params)
+
+    def update(self, channel, text, ts):
+        """ https://api.slack.com/methods/chat.update
+        """
+        self.params.update({
+            'channel': channel,
+            'text':    text,
+            'ts':      ts,
+            })
+        return FromUrl('https://slack.com/api/chat.update', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/chat$')] = Chat
+
+
+class ChatDelete(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/chat.delete$')] = ChatDelete
+
+
+class ChatPostMessage(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/chat.postMessage$')] = ChatPostMessage
+
+
+class ChatUpdate(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/chat.update$')] = ChatUpdate

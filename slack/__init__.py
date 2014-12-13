@@ -97,3 +97,7 @@ class Slack(object):
     @property
     def channels(self):
         return self.fromurl('https://slack.com/api/channels', token=self.token)
+
+    @property
+    def chat(self):
+        return self.fromurl('https://slack.com/api/chat', token=self.token)
