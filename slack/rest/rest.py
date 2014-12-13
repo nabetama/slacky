@@ -296,6 +296,15 @@ class Chat(RestObject):
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/chat.postMessage', self._requests)(data=self.params)
 
+    def update(self, channel, text, ts):
+        """ https://api.slack.com/methods/chat.update
+        """
+        self.params.update({
+            'channel': channel,
+            'text':    text,
+            'ts':      ts,
+            })
+        return FromUrl('https://slack.com/api/chat.update', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat$')] = Chat
 
 
@@ -309,3 +318,9 @@ class ChatPostMessage(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat.postMessage$')] = ChatPostMessage
+
+
+class ChatUpdate(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/chat.update$')] = ChatUpdate
