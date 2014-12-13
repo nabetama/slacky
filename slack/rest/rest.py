@@ -174,6 +174,14 @@ class Channels(RestObject):
             })
         return FromUrl('https://slack.com/api/channels.setTopic', self._requests)(data=self.params)
 
+    def unarchive(self, channel):
+        """ https://api.slack.com/methods/channels.unarchive
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params)
+
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -259,5 +267,11 @@ class ChannelsSetTopic(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.setTopic$')] = ChannelsSetTopic
+
+
+class ChannelsUnarchive(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.unarchive$')] = ChannelsUnarchive
 
 
