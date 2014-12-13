@@ -129,6 +129,14 @@ class Channels(RestObject):
             'user':     user,
             })
         return FromUrl('https://slack.com/api/channels.kick', self._requests)(data=self.params)
+
+    def leave(self, channel):
+        """ https://api.slack.com/methods/channels.leave
+        """
+        self.params.update({
+            'channel':  channel,
+            })
+        return FromUrl('https://slack.com/api/channels.leave', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -172,6 +180,12 @@ class ChannelsKick(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.kick$')] = ChannelsKick
+
+
+class ChannelsLeave(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = ChannelsLeave
 
 
 class ChannelsList(RestObject):
