@@ -155,6 +155,16 @@ class Channels(RestObject):
             'name':     new_name,
             })
         return FromUrl('https://slack.com/api/channels.rename', self._requests)(data=self.params)
+
+    def set_purpose(self, channel, purpose):
+        """ https://api.slack.com/methods/channels.setPurpose
+        """
+        self.params.update({
+            'channel': channel,
+            'purpose': purpose,
+            })
+        return FromUrl('https://slack.com/api/channels.setPurpose', self._requests)(data=self.params)
+
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -228,5 +238,11 @@ class ChannelsRename(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.rename$')] = ChannelsRename
+
+
+class ChannelsSetPurpose(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.setPurpose$')] = ChannelsSetPurpose
 
 
