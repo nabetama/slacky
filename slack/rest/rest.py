@@ -75,10 +75,6 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 # Channels
 # ================================================================================================
 class Channels(RestObject):
-    @property
-    def list(self):
-        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
-
     def archive(self, channel):
         if not channel:
             print '[DEBUG] Input archive channel id.'
@@ -137,6 +133,19 @@ class Channels(RestObject):
             'channel':  channel,
             })
         return FromUrl('https://slack.com/api/channels.leave', self._requests)(data=self.params)
+
+    @property
+    def list(self):
+        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
+
+    def mark(self, channel, ts):
+        """ https://api.slack.com/methods/channels.mark
+        """
+        self.params.update({
+            'channel':  channel,
+            'ts':       ts,
+            })
+        return FromUrl('https://slack.com/api/channels.mark', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -192,4 +201,17 @@ class ChannelsList(RestObject):
     def get(self, **kwargs):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelsList
+
+
+class ChannelsLeave(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = ChannelsLeave
+
+
+class ChannelsMark(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.mark$')] = ChannelsMark
+
 
