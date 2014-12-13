@@ -101,29 +101,39 @@ class Channels(RestObject):
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/channels.history', self._requests)(data=self.params)
+
+    def info(self, channel):
+        self.params.update({'channel': channel})
+        return FromUrl('https://slack.com/api/channels.info', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
 class ChannelArchive(RestObject):
     def post(self, **kwargs):
-        return self._requests.request('POST', self.url, data=self.params['data'])
+        return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelArchive
 
 
 class ChannelCreate(RestObject):
     def post(self, **kwargs):
-        return self._requests.request('POST', self.url, data=self.params['data'])
+        return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelCreate
 
 
 class ChannelHistory(RestObject):
-    def post(self, **kwargs):
-        return self._requests.request('POST', self.url, data=self.params['data'])
+    def get(self, **kwargs):
+        return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelHistory
 
 
+class ChannelInfo(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.info$')] = ChannelInfo
+
+
 class ChannelList(RestObject):
-    def post(self, **kwargs):
-        return self._requests.request('POST', self.url, data=self.params['data'])
+    def get(self, **kwargs):
+        return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelList
 
