@@ -105,6 +105,13 @@ class Channels(RestObject):
     def info(self, channel):
         self.params.update({'channel': channel})
         return FromUrl('https://slack.com/api/channels.info', self._requests)(data=self.params)
+
+    def invite(self, channel, user):
+        self.params.update({
+            'channel':  channel,
+            'user':     user,
+            })
+        return FromUrl('https://slack.com/api/channels.invite', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -130,6 +137,12 @@ class ChannelInfo(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.info$')] = ChannelInfo
+
+
+class ChannelInvite(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.invite$')] = ChannelInvite
 
 
 class ChannelList(RestObject):
