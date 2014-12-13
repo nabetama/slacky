@@ -165,6 +165,15 @@ class Channels(RestObject):
             })
         return FromUrl('https://slack.com/api/channels.setPurpose', self._requests)(data=self.params)
 
+    def set_topic(self, channel, topic):
+        """ https://api.slack.com/methods/channels.setTopic
+        """
+        self.params.update({
+            'channel': channel,
+            'topic': topic,
+            })
+        return FromUrl('https://slack.com/api/channels.setTopic', self._requests)(data=self.params)
+
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -244,5 +253,11 @@ class ChannelsSetPurpose(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.setPurpose$')] = ChannelsSetPurpose
+
+
+class ChannelsSetTopic(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/channels.setTopic$')] = ChannelsSetTopic
 
 
