@@ -344,3 +344,38 @@ class EmojiList(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/emoji.list$')] = EmojiList
+
+
+# ================================================================================================
+# file
+# ================================================================================================
+class Files(RestObject):
+    def info(self, file, **kwargs):
+        """ https://slack.com/api/files.info
+        """
+        self.params.update({
+            'file': file,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/files.info', self._requests)(data=self.params)
+
+    def list(self, **kwargs):
+        """ https://api.slack.com/methods/files.list
+        """
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/files.list', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/files$')] = Files
+
+
+class FilesInfo(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/files.info$')] = FilesInfo
+
+
+class FilesList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/files.list$')] = FilesList
