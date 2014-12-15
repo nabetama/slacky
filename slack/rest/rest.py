@@ -18,10 +18,14 @@ class FromUrl(object):
         self._requests = _requests or __import__('requests')
 
     def __call__(self, **kwargs):
-        for regix, klass in six.iteritems(_url_to_api_object):
-            if regix.match(self.url):
-                return klass(self, **kwargs)  # 自分自身を渡す
-        raise NotImplementedError
+        try:
+            for regix, klass in six.iteritems(_url_to_api_object):
+                if regix.match(self.url):
+                    return klass(self, **kwargs)  # 自分自身を渡す
+            raise NotImplementedError
+        except NotImplementedError as e:
+            print regix.pattern, klass
+            print  e
 
     def get(self, **kwargs):
         self._requests.get(self.url, data=kwargs)
