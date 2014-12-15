@@ -444,10 +444,78 @@ class Groups(RestObject):
         """
         self.params.update({
             'channel': channel,
-            'user': user,
+            'user':    user,
             })
         return FromUrl('https://slack.com/api/groups.invite', self._requests)(data=self.params)
 
+    def kick(self, channel, user):
+        """ https://api.slack.com/methods/groups.kick
+        """
+        self.params.update({
+            'channel': channel,
+            'user':    user,
+            })
+        return FromUrl('https://slack.com/api/groups.kick', self._requests)(data=self.params)
+
+    def leave(self, channel):
+        """ https://api.slack.com/methods/groups.leave
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/groups.leave', self._requests)(data=self.params)
+
+    def mark(self, channel, ts):
+        """ https://api.slack.com/methods/groups.mark
+        """
+        self.params.update({
+            'channel': channel,
+            'ts':      ts,
+            })
+        return FromUrl('https://slack.com/api/groups.mark', self._requests)(data=self.params)
+
+    def open(self, channel):
+        """ https://api.slack.com/methods/groups.open
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/groups.open', self._requests)(data=self.params)
+
+    def rename(self, channel, new_name):
+        """ https://api.slack.com/methods/groups.rename
+        """
+        self.params.update({
+            'channel': channel,
+            'name':    new_name,
+            })
+        return FromUrl('https://slack.com/api/groups.rename', self._requests)(data=self.params)
+
+    def set_purpose(self, channel, purpose):
+        """ https://api.slack.com/methods/groups.setPurpose
+        """
+        self.params.update({
+            'channel': channel,
+            'purpose': purpose,
+            })
+        return FromUrl('https://slack.com/api/groups.setPurpose', self._requests)(data=self.params)
+
+    def set_topic(self, channel, topic):
+        """ https://api.slack.com/methods/groups.setTopic
+        """
+        self.params.update({
+            'channel': channel,
+            'topic':   topic,
+            })
+        return FromUrl('https://slack.com/api/groups.setTopic', self._requests)(data=self.params)
+
+    def unarchive(self, channel):
+        """ https://api.slack.com/methods/groups.unarchive
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/groups.unarchive', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -491,3 +559,51 @@ class GroupsInvite(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.invite$')] = GroupsInvite
+
+
+class GroupsKick(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.kick$')] = GroupsKick
+
+
+class GroupsLeave(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.leave$')] = GroupsLeave
+
+
+class GroupsMark(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.mark$')] = GroupsMark
+
+
+class GroupsOpen(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.open$')] = GroupsOpen
+
+
+class GroupsRename(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.rename$')] = GroupsRename
+
+
+class GroupsSetPurpose(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.setPurpose$')] = GroupsSetPurpose
+
+
+class GroupsSetTopic(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.setTopic$')] = GroupsSetTopic
+
+
+class GroupsUnarchive(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.unarchive$')] = GroupsUnarchive
