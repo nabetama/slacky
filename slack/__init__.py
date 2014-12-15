@@ -117,3 +117,7 @@ class Slack(object):
     @property
     def im(self):
         return self.fromurl('https://slack.com/api/im', token=self.token)
+
+    @property
+    def oauth(self):
+        return self.fromurl('https://slack.com/api/oauth', token=self.token)
