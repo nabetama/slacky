@@ -456,6 +456,14 @@ class Groups(RestObject):
             'user':    user,
             })
         return FromUrl('https://slack.com/api/groups.kick', self._requests)(data=self.params)
+
+    def leave(self, channel):
+        """ https://api.slack.com/methods/groups.leave
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/groups.leave', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -505,3 +513,9 @@ class GroupsKick(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.kick$')] = GroupsKick
+
+
+class GroupsLeave(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.leave$')] = GroupsLeave
