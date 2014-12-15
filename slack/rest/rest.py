@@ -607,3 +607,35 @@ class GroupsUnarchive(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.unarchive$')] = GroupsUnarchive
+
+
+# ================================================================================================
+# im
+# ================================================================================================
+class Im(RestObject):
+    def list(self):
+        """ https://api.slack.com/methods/im.list
+        """
+        return FromUrl('https://slack.com/api/im.list', self._requests)(data=self.params)
+
+    def close(self, channel):
+        """ https://api.slack.com/methods/im.close
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/im.close', self._requests)(data=self.params)
+
+_url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
+
+
+class ImList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.list$')] = ImList
+
+
+class ImClose(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.close$')] = ImClose
