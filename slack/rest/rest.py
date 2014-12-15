@@ -644,6 +644,14 @@ class Im(RestObject):
             'ts':      ts,
             })
         return FromUrl('https://slack.com/api/im.mark', self._requests)(data=self.params)
+
+    def open(self, user):
+        """ https://api.slack.com/methods/im.history
+        """
+        self.params.update({
+            'user': user,
+            })
+        return FromUrl('https://slack.com/api/im.open', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
 
 
@@ -669,3 +677,9 @@ class ImMark(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.mark$')] = ImMark
+
+
+class ImOpen(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.open$')] = ImOpen
