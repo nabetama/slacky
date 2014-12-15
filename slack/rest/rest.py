@@ -424,6 +424,12 @@ class Groups(RestObject):
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/groups.list', self._requests)(data=self.params)
+
+    def create_child(self, channel):
+        """ https://api.slack.com/methods/groups.createChild
+        """
+        self.params.update({'channel': channel})
+        return FromUrl('https://slack.com/api/groups.createChild', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -449,3 +455,9 @@ class GroupsCreate(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.create$')] = GroupsCreate
+
+
+class GroupsCreateChild(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.createChild$')] = GroupsCreateChild
