@@ -481,6 +481,15 @@ class Groups(RestObject):
             'channel': channel,
             })
         return FromUrl('https://slack.com/api/groups.open', self._requests)(data=self.params)
+
+    def rename(self, channel, new_name):
+        """ https://api.slack.com/methods/groups.rename
+        """
+        self.params.update({
+            'channel': channel,
+            'name':    new_name,
+            })
+        return FromUrl('https://slack.com/api/groups.rename', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -548,3 +557,9 @@ class GroupsOpen(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.open$')] = GroupsOpen
+
+
+class GroupsRename(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.rename$')] = GroupsRename
