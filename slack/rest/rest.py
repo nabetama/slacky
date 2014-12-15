@@ -490,6 +490,15 @@ class Groups(RestObject):
             'name':    new_name,
             })
         return FromUrl('https://slack.com/api/groups.rename', self._requests)(data=self.params)
+
+    def set_purpose(self, channel, purpose):
+        """ https://api.slack.com/methods/groups.setPurpose
+        """
+        self.params.update({
+            'channel': channel,
+            'purpose': purpose,
+            })
+        return FromUrl('https://slack.com/api/groups.setPurpose', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -563,3 +572,9 @@ class GroupsRename(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.rename$')] = GroupsRename
+
+
+class GroupsSetPurpose(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.setPurpose$')] = GroupsSetPurpose
