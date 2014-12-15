@@ -683,3 +683,27 @@ class ImOpen(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.open$')] = ImOpen
+
+
+# ================================================================================================
+# oauth
+# ================================================================================================
+class OAuth(RestObject):
+    def access(self, client_id, client_secret, code, **kwargs):
+        """ https://api.slack.com/methods/oauth.access
+        """
+        self.params.update({
+            'client_id':     client_id,
+            'client_secret': client_secret,
+            'code':          code,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/oauth.access', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/oauth$')] = OAuth
+
+
+class OAuthAccess(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/oauth.access$')] = OAuth
