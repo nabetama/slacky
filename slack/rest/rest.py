@@ -607,3 +607,79 @@ class GroupsUnarchive(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.unarchive$')] = GroupsUnarchive
+
+
+# ================================================================================================
+# im
+# ================================================================================================
+class Im(RestObject):
+    def list(self):
+        """ https://api.slack.com/methods/im.list
+        """
+        return FromUrl('https://slack.com/api/im.list', self._requests)(data=self.params)
+
+    def close(self, channel):
+        """ https://api.slack.com/methods/im.close
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/im.close', self._requests)(data=self.params)
+
+    def history(self, channel, **kwargs):
+        """ https://api.slack.com/methods/im.history
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/im.history', self._requests)(data=self.params)
+
+    def mark(self, channel, ts):
+        """ https://api.slack.com/methods/im.mark
+        """
+        self.params.update({
+            'channel': channel,
+            'ts':      ts,
+            })
+        return FromUrl('https://slack.com/api/im.mark', self._requests)(data=self.params)
+
+    def open(self, user):
+        """ https://api.slack.com/methods/im.history
+        """
+        self.params.update({
+            'user': user,
+            })
+        return FromUrl('https://slack.com/api/im.open', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
+
+
+class ImClose(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.close$')] = ImClose
+
+
+class ImHistory(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.history$')] = ImHistory
+
+
+class ImList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.list$')] = ImList
+
+
+class ImMark(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.mark$')] = ImMark
+
+
+class ImOpen(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.open$')] = ImOpen
