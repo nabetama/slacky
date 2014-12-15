@@ -635,6 +635,15 @@ class Im(RestObject):
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/im.history', self._requests)(data=self.params)
+
+    def mark(self, channel, ts):
+        """ https://api.slack.com/methods/im.mark
+        """
+        self.params.update({
+            'channel': channel,
+            'ts':      ts,
+            })
+        return FromUrl('https://slack.com/api/im.mark', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
 
 
@@ -654,3 +663,9 @@ class ImList(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.list$')] = ImList
+
+
+class ImMark(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.mark$')] = ImMark
