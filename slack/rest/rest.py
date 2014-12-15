@@ -412,6 +412,12 @@ class Groups(RestObject):
         self.params.update({'channel': channel})
         return FromUrl('https://slack.com/api/groups.close', self._requests)(data=self.params)
 
+    def create(self, name):
+        """ https://api.slack.com/methods/groups.create
+        """
+        self.params.update({'channel': name})
+        return FromUrl('https://slack.com/api/groups.create', self._requests)(data=self.params)
+
     def list(self, **kwargs):
         """ https://api.slack.com/methods/groups.list
         """
@@ -437,3 +443,9 @@ class GroupsClose(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.close$')] = GroupsClose
+
+
+class GroupsCreate(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.create$')] = GroupsCreate
