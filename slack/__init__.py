@@ -105,3 +105,7 @@ class Slack(object):
     @property
     def emoji(self):
         return self.fromurl('https://slack.com/api/emoji', token=self.token)
+
+    @property
+    def files(self):
+        return self.fromurl('https://slack.com/api/files', token=self.token)
