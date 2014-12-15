@@ -438,6 +438,16 @@ class Groups(RestObject):
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/groups.history', self._requests)(data=self.params)
+
+    def invite(self, channel, user):
+        """ https://api.slack.com/methods/groups.invite
+        """
+        self.params.update({
+            'channel': channel,
+            'user': user,
+            })
+        return FromUrl('https://slack.com/api/groups.invite', self._requests)(data=self.params)
+
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -475,3 +485,9 @@ class GroupsHistory(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.history$')] = GroupsHistory
+
+
+class GroupsInvite(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.invite$')] = GroupsInvite
