@@ -366,6 +366,13 @@ class Files(RestObject):
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/files.list', self._requests)(data=self.params)
+
+    def upload(self, **kwargs):
+        """ https://api.slack.com/methods/files.upload
+        """
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/files.upload', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/files$')] = Files
 
 
@@ -379,3 +386,11 @@ class FilesList(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/files.list$')] = FilesList
+
+
+class FilesUpload(RestObject):
+    def post(self):
+        files = {}
+        files = {'file': open(self.params['data']['file'])}
+        return self._requests.post(self.url, params=self.params['data'], files=files)
+_url_to_api_object[re.compile(r'^https://slack.com/api/files.upload$')] = FilesUpload
