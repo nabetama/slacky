@@ -121,3 +121,7 @@ class Slack(object):
     @property
     def oauth(self):
         return self.fromurl('https://slack.com/api/oauth', token=self.token)
+
+    @property
+    def presence(self):
+        return self.fromurl('https://slack.com/api/presence', token=self.token)
