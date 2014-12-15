@@ -638,12 +638,6 @@ class Im(RestObject):
 _url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
 
 
-class ImList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
-_url_to_api_object[re.compile(r'^https://slack.com/api/im.list$')] = ImList
-
-
 class ImClose(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
@@ -654,3 +648,9 @@ class ImHistory(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.history$')] = ImHistory
+
+
+class ImList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.list$')] = ImList
