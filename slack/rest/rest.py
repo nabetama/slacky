@@ -324,3 +324,19 @@ class ChatUpdate(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat.update$')] = ChatUpdate
+
+
+# ================================================================================================
+# emoji
+# ================================================================================================
+class Emoji(RestObject):
+    @property
+    def list(self):
+        return FromUrl('https://slack.com/api/emoji.list', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/emoji$')] = Emoji
+
+
+class EmojiList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/emoji.list$')] = EmojiList

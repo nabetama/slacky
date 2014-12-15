@@ -101,3 +101,7 @@ class Slack(object):
     @property
     def chat(self):
         return self.fromurl('https://slack.com/api/chat', token=self.token)
+
+    @property
+    def emoji(self):
+        return self.fromurl('https://slack.com/api/emoji', token=self.token)
