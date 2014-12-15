@@ -394,3 +394,34 @@ class FilesUpload(RestObject):
         files = {'file': open(self.params['data']['file'])}
         return self._requests.post(self.url, params=self.params['data'], files=files)
 _url_to_api_object[re.compile(r'^https://slack.com/api/files.upload$')] = FilesUpload
+
+
+# ================================================================================================
+# groups
+# ================================================================================================
+class Groups(RestObject):
+    def archive(self, channel):
+        """ https://api.slack.com/methods/groups.archive
+        """
+        self.params.update({'channel': channel})
+        return FromUrl('https://slack.com/api/groups.archive', self._requests)(data=self.params)
+
+    def list(self, **kwargs):
+        """ https://api.slack.com/methods/groups.list
+        """
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/groups.list', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
+
+
+class GroupsArchive(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.archive$')] = GroupsArchive
+
+
+class GroupsList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.list$')] = GroupsList

@@ -109,3 +109,7 @@ class Slack(object):
     @property
     def files(self):
         return self.fromurl('https://slack.com/api/files', token=self.token)
+
+    @property
+    def groups(self):
+        return self.fromurl('https://slack.com/api/groups', token=self.token)
