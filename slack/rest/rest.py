@@ -508,6 +508,14 @@ class Groups(RestObject):
             'topic':   topic,
             })
         return FromUrl('https://slack.com/api/groups.setTopic', self._requests)(data=self.params)
+
+    def unarchive(self, channel):
+        """ https://api.slack.com/methods/groups.unarchive
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        return FromUrl('https://slack.com/api/groups.unarchive', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -593,3 +601,9 @@ class GroupsSetTopic(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.setTopic$')] = GroupsSetTopic
+
+
+class GroupsUnarchive(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/groups.unarchive$')] = GroupsUnarchive
