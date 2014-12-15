@@ -707,3 +707,23 @@ class OAuthAccess(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/oauth.access$')] = OAuth
+
+
+# ================================================================================================
+# presence
+# ================================================================================================
+class Presence(RestObject):
+    def set(self, presence):
+        """ https://api.slack.com/methods/presence.set
+        """
+        self.params.update({
+            'presence': presence,
+            })
+        return FromUrl('https://slack.com/api/presence.set', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/presence$')] = Presence
+
+
+class PresenceSet(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/presence.set$')] = PresenceSet
