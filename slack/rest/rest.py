@@ -626,6 +626,15 @@ class Im(RestObject):
             })
         return FromUrl('https://slack.com/api/im.close', self._requests)(data=self.params)
 
+    def history(self, channel, **kwargs):
+        """ https://api.slack.com/methods/im.history
+        """
+        self.params.update({
+            'channel': channel,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/im.history', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
 
 
@@ -639,3 +648,9 @@ class ImClose(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.close$')] = ImClose
+
+
+class ImHistory(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/im.history$')] = ImHistory
