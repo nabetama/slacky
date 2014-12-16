@@ -742,6 +742,8 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/rtm$')] = Rtm
 
 
 class RtmStart(RestObject):
+    """ https://api.slack.com/rtm
+    """
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 
