@@ -744,4 +744,12 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/rtm$')] = Rtm
 class RtmStart(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
+
+    def lasting(self, interval=1):
+        # TODO: Return json per interval.
+        import time
+        while True:
+            print self.get().json()
+            time.sleep(interval)
+
 _url_to_api_object[re.compile(r'^https://slack.com/api/rtm.start$')] = RtmStart
