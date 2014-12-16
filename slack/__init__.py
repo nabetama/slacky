@@ -125,3 +125,7 @@ class Slack(object):
     @property
     def presence(self):
         return self.fromurl('https://slack.com/api/presence', token=self.token)
+
+    @property
+    def rtm(self):
+        return self.fromurl('https://slack.com/api/rtm', token=self.token)

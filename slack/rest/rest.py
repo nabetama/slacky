@@ -727,3 +727,21 @@ class PresenceSet(RestObject):
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/presence.set$')] = PresenceSet
+
+
+# ================================================================================================
+# rtm
+# ================================================================================================
+class Rtm(RestObject):
+    @property
+    def start(self):
+        """ https://api.slack.com/methods/rtm.start
+        """
+        return FromUrl('https://slack.com/api/rtm.start', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/rtm$')] = Rtm
+
+
+class RtmStart(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/rtm.start$')] = RtmStart
