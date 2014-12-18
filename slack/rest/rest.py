@@ -820,7 +820,7 @@ class Stars(RestObject):
         """
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/rtm.start', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/stars.list', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/stars$')] = Stars
 
 
