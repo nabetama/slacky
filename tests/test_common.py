@@ -26,3 +26,4 @@ class TestSlack(object):
 
     def set_up_slack(self):
         self.slack = slack.Slack(self.access_token)
+
