@@ -755,3 +755,25 @@ class RtmStart(RestObject):
             time.sleep(interval)
 
 _url_to_api_object[re.compile(r'^https://slack.com/api/rtm.start$')] = RtmStart
+
+
+# ================================================================================================
+# search
+# ================================================================================================
+class Search(RestObject):
+    def all(self, query, **kwargs):
+        """ https://api.slack.com/methods/search.all
+        """
+        self.params.update({
+            'query': query,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/search.all', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/search$')] = Search
+
+
+class SearchAll(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/search.all$')] = SearchAll

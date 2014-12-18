@@ -129,3 +129,7 @@ class Slack(object):
     @property
     def rtm(self):
         return self.fromurl('https://slack.com/api/rtm', token=self.token)
+
+    @property
+    def search(self):
+        return self.fromurl('https://slack.com/api/search', token=self.token)
