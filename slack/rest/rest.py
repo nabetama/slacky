@@ -828,3 +828,23 @@ class StarsList(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/stars.list$')] = StarsList
+
+
+# ================================================================================================
+# users
+# ================================================================================================
+class Users(RestObject):
+    def info(self, user):
+        """ https://api.slack.com/methods/users.info
+        """
+        self.params.update({
+            'user': user,
+            })
+        return FromUrl('https://slack.com/api/users.info', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/users$')] = Users
+
+
+class UsersInfo(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/users.info$')] = UsersInfo
