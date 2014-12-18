@@ -760,26 +760,36 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/rtm.start$')] = RtmStart
 # ================================================================================================
 # search
 # ================================================================================================
-class Search(RestObject):
+class SearchBase(RestObject):
+    def search_from_url(self, query, **kwargs):
+        if not self.url:
+            raise AttributeError
+        self.params.update({
+            'query': query,
+            })
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl(self.url, self._requests)(data=self.params)
+
+
+class Search(SearchBase):
     def all(self, query, **kwargs):
         """ https://api.slack.com/methods/search.all
         """
-        self.params.update({
-            'query': query,
-            })
-        if kwargs:
-            self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/search.all', self._requests)(data=self.params)
+        self.url = 'https://slack.com/api/search.all'
+        return super(Search, self).search_from_url(query, **kwargs)
 
     def files(self, query, **kwargs):
-        """ https://api.slack.com/methods/search.file
+        """ https://api.slack.com/methods/search.files
         """
-        self.params.update({
-            'query': query,
-            })
-        if kwargs:
-            self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/search.files', self._requests)(data=self.params)
+        self.url = 'https://slack.com/api/search.files'
+        return super(Search, self).search_from_url(query, **kwargs)
+
+    def messages(self, query, **kwargs):
+        """ https://api.slack.com/methods/search.messages
+        """
+        self.url = 'https://slack.com/api/search.messages'
+        return super(Search, self).search_from_url(query, **kwargs)
 _url_to_api_object[re.compile(r'^https://slack.com/api/search$')] = Search
 
 
@@ -793,3 +803,9 @@ class SearchFiles(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/search.files$')] = SearchFiles
+
+
+class SearchMessages(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/search.messages$')] = SearchMessages
