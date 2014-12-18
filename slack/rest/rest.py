@@ -809,3 +809,22 @@ class SearchMessages(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/search.messages$')] = SearchMessages
+
+
+# ================================================================================================
+# stars
+# ================================================================================================
+class Stars(RestObject):
+    def list(self, **kwargs):
+        """ https://api.slack.com/methods/stars.list
+        """
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/rtm.start', self._requests)(data=self.params)
+_url_to_api_object[re.compile(r'^https://slack.com/api/stars$')] = Stars
+
+
+class StarsList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/stars.list$')] = StarsList
