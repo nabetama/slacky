@@ -841,6 +841,14 @@ class Users(RestObject):
             'user': user,
             })
         return FromUrl('https://slack.com/api/users.info', self._requests)(data=self.params)
+
+    def set_active(self, user):
+        """ https://api.slack.com/methods/users.setActive
+        """
+        self.params.update({
+            'user': user,
+            })
+        return FromUrl('https://slack.com/api/users.setActive', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/users$')] = Users
 
 
@@ -848,3 +856,9 @@ class UsersInfo(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/users.info$')] = UsersInfo
+
+
+class UsersSetActive(RestObject):
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/users.setActive$')] = UsersSetActive
