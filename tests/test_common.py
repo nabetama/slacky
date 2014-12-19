@@ -24,6 +24,7 @@ class TestSlack(object):
             print('Authorization token not detected! The token is pulled from '\
                 '~/.slack, /etc/slack, or the environment variable SLACK_TOKEN.')
         self.test_channel      = self.config.get('Slack', 'test-channel')
+        self.test_user         = self.config.get('Slack', 'test-user')
         self.test_channel_name = self.config.get('Slack', 'test-channel-name')
 
     def set_up_slack(self):
