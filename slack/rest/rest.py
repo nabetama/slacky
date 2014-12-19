@@ -74,14 +74,10 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 # ================================================================================================
 class Channels(RestObject):
     def archive(self, channel):
-        if not channel:
-            print '[DEBUG] Input archive channel id.'
         self.params.update({'channel': channel})
         return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
 
     def create(self, name):
-        if not name:
-            print '[DEBUG] Input name for new channel.'
         self.params.update({'name': name})
         return FromUrl('https://slack.com/api/channels.create', self._requests)(data=self.params)
 
@@ -89,8 +85,6 @@ class Channels(RestObject):
         """ https://api.slack.com/methods/channels.history
         latest, oldest, count
         """
-        if not channel:
-            print '[DEBUG] Please input the channel you\'d like to see.'
         self.params.update({'channel': channel})
         if kwargs:
             self.params.update(kwargs)
