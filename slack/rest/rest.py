@@ -1,11 +1,7 @@
 # coding: utf-8
 
 from __future__ import absolute_import, division
-import json
 import re
-import datetime
-import dateutil.parser
-import dateutil.tz
 import six
 
 
