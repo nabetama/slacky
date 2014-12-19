@@ -30,34 +30,37 @@ class FromUrl(object):
         return "<%s url=%r>" % (type(self).__name__, self.url)
 
 
-class RestObject(object):
+class ApiBase(object):
     def __init__(self, from_url, **kwargs):
         self.url = from_url.url
         self._requests = from_url._requests
         self.params = kwargs.copy()
 
 
+class RestObject(ApiBase):
+    pass
+
+
 # ================================================================================================
 # Api
 # ================================================================================================
-class Api(RestObject):
+class Api(ApiBase):
     @property
     def test(self):
-        return FromUrl('https://slack.com/api/api.test', self._requests)()
+        return FromUrl('https://slack.com/api/api.test', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api$')] = Api
 
 
 class ApiTest(RestObject):
     def get(self, **kwargs):
-        params = kwargs.copy()
-        return self._requests.get(self.url, data=params)
+        return self._requests.get(self.url, data=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
 
 
 # ================================================================================================
 # Auth
 # ================================================================================================
-class Auth(RestObject):
+class Auth(ApiBase):
     @property
     def test(self):
         return FromUrl('https://slack.com/api/auth.test', self._requests)(data=self.params)
@@ -72,7 +75,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 # ================================================================================================
 # Channels
 # ================================================================================================
-class Channels(RestObject):
+class Channels(ApiBase):
     def archive(self, channel):
         self.params.update({'channel': channel})
         return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
@@ -269,7 +272,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels.unarchive$')] = 
 # ================================================================================================
 # Chat
 # ================================================================================================
-class Chat(RestObject):
+class Chat(ApiBase):
     def delete(self, channel, ts):
         """ https://api.slack.com/methods/chat.delete
         """
@@ -323,7 +326,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/chat.update$')] = ChatUpd
 # ================================================================================================
 # emoji
 # ================================================================================================
-class Emoji(RestObject):
+class Emoji(ApiBase):
     @property
     def list(self):
         return FromUrl('https://slack.com/api/emoji.list', self._requests)(data=self.params)
@@ -339,7 +342,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/emoji.list$')] = EmojiLis
 # ================================================================================================
 # file
 # ================================================================================================
-class Files(RestObject):
+class Files(ApiBase):
     def info(self, file, **kwargs):
         """ https://slack.com/api/files.info
         """
@@ -389,7 +392,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/files.upload$')] = FilesU
 # ================================================================================================
 # groups
 # ================================================================================================
-class Groups(RestObject):
+class Groups(ApiBase):
     def archive(self, channel):
         """ https://api.slack.com/methods/groups.archive
         """
@@ -602,7 +605,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/groups.unarchive$')] = Gr
 # ================================================================================================
 # im
 # ================================================================================================
-class Im(RestObject):
+class Im(ApiBase):
     def list(self):
         """ https://api.slack.com/methods/im.list
         """
@@ -678,7 +681,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/im.open$')] = ImOpen
 # ================================================================================================
 # oauth
 # ================================================================================================
-class OAuth(RestObject):
+class OAuth(ApiBase):
     def access(self, client_id, client_secret, code, **kwargs):
         """ https://api.slack.com/methods/oauth.access
         """
@@ -702,7 +705,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/oauth.access$')] = OAuth
 # ================================================================================================
 # presence
 # ================================================================================================
-class Presence(RestObject):
+class Presence(ApiBase):
     def set(self, presence):
         """ https://api.slack.com/methods/presence.set
         """
@@ -722,7 +725,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/presence.set$')] = Presen
 # ================================================================================================
 # rtm
 # ================================================================================================
-class Rtm(RestObject):
+class Rtm(ApiBase):
     @property
     def start(self):
         """ https://api.slack.com/methods/rtm.start
@@ -750,7 +753,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/rtm.start$')] = RtmStart
 # ================================================================================================
 # search
 # ================================================================================================
-class SearchBase(RestObject):
+class SearchBase(ApiBase):
     def search_from_url(self, query, **kwargs):
         if not self.url:
             raise AttributeError
@@ -804,7 +807,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/search.messages$')] = Sea
 # ================================================================================================
 # stars
 # ================================================================================================
-class Stars(RestObject):
+class Stars(ApiBase):
     def list(self, **kwargs):
         """ https://api.slack.com/methods/stars.list
         """
@@ -823,7 +826,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/stars.list$')] = StarsLis
 # ================================================================================================
 # users
 # ================================================================================================
-class Users(RestObject):
+class Users(ApiBase):
     def info(self, user):
         """ https://api.slack.com/methods/users.info
         """
