@@ -23,9 +23,6 @@ class FromUrl(object):
             print regix.pattern, klass
             print  e
 
-    def get(self, **kwargs):
-        self._requests.get(self.url, data=kwargs)
-
     def __repr__(self):
         return "<%s url=%r>" % (type(self).__name__, self.url)
 
