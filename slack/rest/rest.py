@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from __future__ import absolute_import, division
+import json
 import re
 import six
 
@@ -73,6 +74,20 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 # Channels
 # ================================================================================================
 class Channels(ApiBase):
+    def get_channels(self, channel_name):
+        channels = []
+        for line in self.list.get().iter_lines():
+            if line:
+                channels = json.loads(line).get('channels')
+        return channels
+
+    def get_channel_id(self, channel_name):
+        channels = self.get_channels(channel_name)
+        for channel in channels:
+            if channel['name'] == channel_name:
+                return channel['id']
+        return ''
+
     def archive(self, channel):
         self.params.update({'channel': channel})
         return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
