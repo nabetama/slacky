@@ -88,56 +88,62 @@ class Channels(ApiBase):
                 return channel['id']
         return ''
 
-    def archive(self, channel):
-        self.params.update({'channel': channel})
+    def archive(self, channel_name):
+        channel_id = self.get_channel_id(channel_name)
+        self.params.update({'channel': channel_id})
         return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
 
     def create(self, name):
         self.params.update({'name': name})
         return FromUrl('https://slack.com/api/channels.create', self._requests)(data=self.params)
 
-    def history(self, channel, **kwargs):
+    def history(self, channel_name, **kwargs):
         """ https://api.slack.com/methods/channels.history
         latest, oldest, count
         """
-        self.params.update({'channel': channel})
+        channel_id = self.get_channel_id(channel_name)
+        self.params.update({'channel': channel_id})
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/channels.history', self._requests)(data=self.params)
 
-    def info(self, channel):
-        self.params.update({'channel': channel})
+    def info(self, channel_name):
+        channel_id = self.get_channel_id(channel_name)
+        self.params.update({'channel': channel_id})
         return FromUrl('https://slack.com/api/channels.info', self._requests)(data=self.params)
 
-    def invite(self, channel, user):
+    def invite(self, channel_name, user):
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel':  channel,
-            'user':     user,
+            'channel': channel_id,
+            'user':    user,
             })
         return FromUrl('https://slack.com/api/channels.invite', self._requests)(data=self.params)
 
-    def join(self, channel):
+    def join(self, channel_name):
         """ https://api.slack.com/methods/channels.join
         """
         self.params.update({
-            'name': channel,
+            'name': channel_name,
             })
         return FromUrl('https://slack.com/api/channels.join', self._requests)(data=self.params)
 
-    def kick(self, channel, user):
+    def kick(self, channel_name, user):
         """ https://api.slack.com/methods/channels.kick
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel':  channel,
+            'channel':  channel_id,
             'user':     user,
             })
         return FromUrl('https://slack.com/api/channels.kick', self._requests)(data=self.params)
 
-    def leave(self, channel):
+    def leave(self, channel_name):
         """ https://api.slack.com/methods/channels.leave
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel':  channel,
+            'channel':  channel_id,
             })
         return FromUrl('https://slack.com/api/channels.leave', self._requests)(data=self.params)
 
@@ -145,47 +151,52 @@ class Channels(ApiBase):
     def list(self):
         return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
 
-    def mark(self, channel, ts):
+    def mark(self, channel_name, ts):
         """ https://api.slack.com/methods/channels.mark
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel':  channel,
+            'channel':  channel_id,
             'ts':       ts,
             })
         return FromUrl('https://slack.com/api/channels.mark', self._requests)(data=self.params)
 
-    def rename(self, channel, new_name):
+    def rename(self, channel_name, new_name):
         """ https://api.slack.com/methods/channels.rename
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel':  channel,
+            'channel':  channel_id,
             'name':     new_name,
             })
         return FromUrl('https://slack.com/api/channels.rename', self._requests)(data=self.params)
 
-    def set_purpose(self, channel, purpose):
+    def set_purpose(self, channel_name, purpose):
         """ https://api.slack.com/methods/channels.setPurpose
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel': channel,
+            'channel': channel_id,
             'purpose': purpose,
             })
         return FromUrl('https://slack.com/api/channels.setPurpose', self._requests)(data=self.params)
 
-    def set_topic(self, channel, topic):
+    def set_topic(self, channel_name, topic):
         """ https://api.slack.com/methods/channels.setTopic
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel': channel,
+            'channel': channel_id,
             'topic': topic,
             })
         return FromUrl('https://slack.com/api/channels.setTopic', self._requests)(data=self.params)
 
-    def unarchive(self, channel):
+    def unarchive(self, channel_name):
         """ https://api.slack.com/methods/channels.unarchive
         """
+        channel_id = self.get_channel_id(channel_name)
         self.params.update({
-            'channel': channel,
+            'channel': channel_id,
             })
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params)
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
