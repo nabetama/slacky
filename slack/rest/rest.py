@@ -66,7 +66,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth$')] = Auth
 
 class AuthTest(RestObject):
     def get(self, **kwargs):
-        return self._requests.get(self.url, data=self.params['data'])
+        return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 
 # ================================================================================================
