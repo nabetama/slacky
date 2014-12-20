@@ -7,7 +7,7 @@ import sys
 import os
 import datetime
 import six
-from .requests import Requests, HttpForbidden, Auth
+from .requests import Requests, HttpForbidden
 from .rest import FromUrl
 
 __all__ = ('Slack',)
@@ -80,7 +80,7 @@ class _requests(Requests):
 
 class Slack(object):
     def __init__(self, token):
-        self._requests = _requests(auth=Auth)
+        self._requests = _requests()
         self.token = token
 
     def fromurl(self, url, **kwargs):

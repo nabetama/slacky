@@ -180,12 +180,3 @@ class Requests(requests.sessions.Session):
             raise _http_errors[rv.status_code](rv.text, response=rv)
         rv.raise_for_status()
         return rv
-
-
-class Auth(requests.auth.AuthBase):
-    def __init__(self, token):
-        self.token = token
-
-    def __call__(self, r):
-        r.headers['Authorization'] = "Auth %s" % self.token
-        return r
