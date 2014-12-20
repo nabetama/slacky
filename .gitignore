@@ -55,3 +55,6 @@ target/
 
 # test file
 test.py
+
+# ctags
+tags
