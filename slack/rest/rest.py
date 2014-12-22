@@ -116,11 +116,11 @@ class Channels(ApiBase):
             })
         return FromUrl('https://slack.com/api/channels.invite', self._requests)(data=self.params)
 
-    def join(self, channel):
+    def join(self, name):
         """ https://api.slack.com/methods/channels.join
         """
         self.params.update({
-            'name': channel,
+            'name': name,
             })
         return FromUrl('https://slack.com/api/channels.join', self._requests)(data=self.params)
 
