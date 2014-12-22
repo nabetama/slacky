@@ -50,7 +50,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api$')] = Api
 
 
 class ApiTest(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, data=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
 
@@ -66,7 +66,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth$')] = Auth
 
 
 class AuthTest(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 
@@ -203,19 +203,19 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
 class ChannelsArchive(RestObject):
-    def post(self, **kwargs):
+    def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelsArchive
 
 
 class ChannelsCreate(RestObject):
-    def post(self, **kwargs):
+    def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelsCreate
 
 
 class ChannelsHistory(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelsHistory
 
@@ -251,7 +251,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = Chan
 
 
 class ChannelsList(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelsList
 
@@ -858,6 +858,12 @@ class Users(ApiBase):
             })
         return FromUrl('https://slack.com/api/users.info', self._requests)(data=self.params)
 
+    @property
+    def list(self):
+        """ https://api.slack.com/methods/users.list
+        """
+        return FromUrl('https://slack.com/api/users.list', self._requests)(data=self.params)
+
     def set_active(self, user):
         """ https://api.slack.com/methods/users.setActive
         """
@@ -872,6 +878,12 @@ class UsersInfo(RestObject):
     def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/users.info$')] = UsersInfo
+
+
+class UsersList(RestObject):
+    def get(self):
+        return self._requests.get(self.url, params=self.params['data'])
+_url_to_api_object[re.compile(r'^https://slack.com/api/users.list$')] = UsersList
 
 
 class UsersSetActive(RestObject):
