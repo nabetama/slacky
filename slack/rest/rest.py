@@ -36,8 +36,11 @@ class ApiBase(object):
 
 
 class RestObject(ApiBase):
-    pass
+    def get(self):
+        return self._requests.get(self.url, data=self.params['data'])
 
+    def post(self):
+        return self._requests.post(self.url, params=self.params['data'])
 
 # ================================================================================================
 # Api
@@ -50,8 +53,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api$')] = Api
 
 
 class ApiTest(RestObject):
-    def get(self):
-        return self._requests.get(self.url, data=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
 
 
@@ -66,8 +68,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth$')] = Auth
 
 
 class AuthTest(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 
 # ================================================================================================
@@ -192,8 +193,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
 class ChannelsArchive(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelsArchive
 
 
@@ -204,80 +204,67 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = Cha
 
 
 class ChannelsHistory(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelsHistory
 
 
 class ChannelsInfo(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.info$')] = ChannelsInfo
 
 
 class ChannelsInvite(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.invite$')] = ChannelsInvite
 
 
 class ChannelsJoin(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.join$')] = ChannelsJoin
 
 
 class ChannelsKick(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.kick$')] = ChannelsKick
 
 
 class ChannelsLeave(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = ChannelsLeave
 
 
 class ChannelsList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelsList
 
 
 class ChannelsLeave(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = ChannelsLeave
 
 
 class ChannelsMark(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.mark$')] = ChannelsMark
 
 
 class ChannelsRename(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.rename$')] = ChannelsRename
 
 
 class ChannelsSetPurpose(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.setPurpose$')] = ChannelsSetPurpose
 
 
 class ChannelsSetTopic(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.setTopic$')] = ChannelsSetTopic
 
 
 class ChannelsUnarchive(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.unarchive$')] = ChannelsUnarchive
 
 
@@ -318,20 +305,17 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/chat$')] = Chat
 
 
 class ChatDelete(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat.delete$')] = ChatDelete
 
 
 class ChatPostMessage(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat.postMessage$')] = ChatPostMessage
 
 
 class ChatUpdate(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat.update$')] = ChatUpdate
 
 
@@ -346,8 +330,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/emoji$')] = Emoji
 
 
 class EmojiList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/emoji.list$')] = EmojiList
 
 
@@ -382,19 +365,19 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/files$')] = Files
 
 
 class FilesInfo(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/files.info$')] = FilesInfo
 
 
 class FilesList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/files.list$')] = FilesList
 
 
 class FilesUpload(RestObject):
     def post(self):
+        """ @override
+        """
         files = {}
         files = {'file': open(self.params['data']['file'])}
         return self._requests.post(self.url, params=self.params['data'], files=files)
@@ -525,92 +508,77 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
 class GroupsArchive(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.archive$')] = GroupsArchive
 
 
 class GroupsList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.list$')] = GroupsList
 
 
 class GroupsClose(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.close$')] = GroupsClose
 
 
 class GroupsCreate(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.create$')] = GroupsCreate
 
 
 class GroupsCreateChild(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.createChild$')] = GroupsCreateChild
 
 
 class GroupsHistory(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.history$')] = GroupsHistory
 
 
 class GroupsInvite(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.invite$')] = GroupsInvite
 
 
 class GroupsKick(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.kick$')] = GroupsKick
 
 
 class GroupsLeave(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.leave$')] = GroupsLeave
 
 
 class GroupsMark(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.mark$')] = GroupsMark
 
 
 class GroupsOpen(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.open$')] = GroupsOpen
 
 
 class GroupsRename(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.rename$')] = GroupsRename
 
 
 class GroupsSetPurpose(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.setPurpose$')] = GroupsSetPurpose
 
 
 class GroupsSetTopic(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.setTopic$')] = GroupsSetTopic
 
 
 class GroupsUnarchive(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups.unarchive$')] = GroupsUnarchive
 
 
@@ -661,32 +629,27 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
 
 
 class ImClose(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.close$')] = ImClose
 
 
 class ImHistory(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.history$')] = ImHistory
 
 
 class ImList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.list$')] = ImList
 
 
 class ImMark(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.mark$')] = ImMark
 
 
 class ImOpen(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/im.open$')] = ImOpen
 
 
@@ -709,8 +672,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/oauth$')] = OAuth
 
 
 class OAuthAccess(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/oauth.access$')] = OAuth
 
 
@@ -729,8 +691,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/presence$')] = Presence
 
 
 class PresenceSet(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/presence.set$')] = PresenceSet
 
 
@@ -749,9 +710,6 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/rtm$')] = Rtm
 class RtmStart(RestObject):
     """ https://api.slack.com/rtm
     """
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
-
     def lasting(self, interval=1):
         # TODO: Return json per interval.
         import time
@@ -799,20 +757,17 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/search$')] = Search
 
 
 class SearchAll(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/search.all$')] = SearchAll
 
 
 class SearchFiles(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/search.files$')] = SearchFiles
 
 
 class SearchMessages(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/search.messages$')] = SearchMessages
 
 
@@ -830,8 +785,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/stars$')] = Stars
 
 
 class StarsList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/stars.list$')] = StarsList
 
 
@@ -864,18 +818,15 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/users$')] = Users
 
 
 class UsersInfo(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/users.info$')] = UsersInfo
 
 
 class UsersList(RestObject):
-    def get(self):
-        return self._requests.get(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/users.list$')] = UsersList
 
 
 class UsersSetActive(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/users.setActive$')] = UsersSetActive
