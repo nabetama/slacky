@@ -50,7 +50,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api$')] = Api
 
 
 class ApiTest(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, data=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
 
@@ -66,7 +66,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth$')] = Auth
 
 
 class AuthTest(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 
@@ -192,19 +192,19 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
 class ChannelsArchive(RestObject):
-    def post(self, **kwargs):
+    def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = ChannelsArchive
 
 
 class ChannelsCreate(RestObject):
-    def post(self, **kwargs):
+    def post(self):
         return self._requests.post(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelsCreate
 
 
 class ChannelsHistory(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.history$')] = ChannelsHistory
 
@@ -240,7 +240,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels.leave$')] = Chan
 
 
 class ChannelsList(RestObject):
-    def get(self, **kwargs):
+    def get(self):
         return self._requests.get(self.url, params=self.params['data'])
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.list$')] = ChannelsList
 
