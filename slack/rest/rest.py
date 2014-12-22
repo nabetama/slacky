@@ -209,8 +209,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/channels.archive$')] = Ch
 
 
 class ChannelsCreate(RestObject):
-    def post(self):
-        return self._requests.post(self.url, params=self.params['data'])
+    pass
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels.create$')] = ChannelsCreate
 
 
