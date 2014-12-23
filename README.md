@@ -18,7 +18,7 @@ print slack.chat.post_message('#general', 'Hello from slacky').json()
 > => {u'ok': True,  u'ts': u'1234567890.000001',  u'channel': u'XXXXXXXXX'}
 
 # Get user list.
-slack.users.list.json(['members'])
+slack.users.list.json()['members']
 
 # Upload a file.
 slack.files.upload(file='hello.png')
