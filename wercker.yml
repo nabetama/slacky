@@ -1,7 +1,4 @@
 box: wercker/python
-services:
-    - wercker/mongodb
-    - mies/memcached
 build:
     steps:
         - nabetama/virtualenv:
