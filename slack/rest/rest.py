@@ -48,7 +48,7 @@ class RestObject(ApiBase):
 class Api(ApiBase):
     @property
     def test(self):
-        return FromUrl('https://slack.com/api/api.test', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/api.test', self._requests)(data=self.params).get()
 _url_to_api_object[re.compile(r'^https://slack.com/api$')] = Api
 
 
@@ -63,7 +63,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/api.test$')] = ApiTest
 class Auth(ApiBase):
     @property
     def test(self):
-        return FromUrl('https://slack.com/api/auth.test', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/auth.test', self._requests)(data=self.params).get()
 _url_to_api_object[re.compile(r'^https://slack.com/api/auth$')] = Auth
 
 
@@ -77,7 +77,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 class Channels(ApiBase):
     def get_channels(self, channel_name):
         channels = []
-        for line in self.list.get().iter_lines():
+        for line in self.list.iter_lines():
             if line:
                 channels = json.loads(line).get('channels')
         return channels
@@ -94,13 +94,13 @@ class Channels(ApiBase):
         """
         channel_id = self.get_channel_id(channel_name)
         self.params.update({'channel': channel_id})
-        return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.archive', self._requests)(data=self.params).post()
 
     def create(self, name):
         """ https://api.slack.com/methods/channels.create
         """
         self.params.update({'name': name})
-        return FromUrl('https://slack.com/api/channels.create', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.create', self._requests)(data=self.params).post()
 
     def history(self, channel_name, **kwargs):
         """ https://api.slack.com/methods/channels.history
@@ -109,14 +109,14 @@ class Channels(ApiBase):
         self.params.update({'channel': channel_id})
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/channels.history', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.history', self._requests)(data=self.params).get()
 
     def info(self, channel_name):
         """ https://api.slack.com/methods/channels.info
         """
         channel_id = self.get_channel_id(channel_name)
         self.params.update({'channel': channel_id})
-        return FromUrl('https://slack.com/api/channels.info', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.info', self._requests)(data=self.params).get()
 
     def invite(self, channel_name, user):
         """ https://api.slack.com/methods/channels.invite
@@ -126,7 +126,7 @@ class Channels(ApiBase):
             'channel': channel_id,
             'user':    user,
             })
-        return FromUrl('https://slack.com/api/channels.invite', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.invite', self._requests)(data=self.params).post()
 
     def join(self, channel_name):
         """ https://api.slack.com/methods/channels.join
@@ -134,7 +134,7 @@ class Channels(ApiBase):
         self.params.update({
             'name': channel_name,
             })
-        return FromUrl('https://slack.com/api/channels.join', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.join', self._requests)(data=self.params).post()
 
     def kick(self, channel_name, user):
         """ https://api.slack.com/methods/channels.kick
@@ -144,7 +144,7 @@ class Channels(ApiBase):
             'channel':  channel_id,
             'user':     user,
             })
-        return FromUrl('https://slack.com/api/channels.kick', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.kick', self._requests)(data=self.params).post()
 
     def leave(self, channel_name):
         """ https://api.slack.com/methods/channels.leave
@@ -153,13 +153,13 @@ class Channels(ApiBase):
         self.params.update({
             'channel':  channel_id,
             })
-        return FromUrl('https://slack.com/api/channels.leave', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.leave', self._requests)(data=self.params).post()
 
     @property
     def list(self):
         """ https://api.slack.com/methods/channels.list
         """
-        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.list', self._requests)(data=self.params).get()
 
     def mark(self, channel_name, ts):
         """ https://api.slack.com/methods/channels.mark
@@ -169,7 +169,7 @@ class Channels(ApiBase):
             'channel':  channel_id,
             'ts':       ts,
             })
-        return FromUrl('https://slack.com/api/channels.mark', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.mark', self._requests)(data=self.params).post()
 
     def rename(self, channel_name, new_name):
         """ https://api.slack.com/methods/channels.rename
@@ -179,7 +179,7 @@ class Channels(ApiBase):
             'channel':  channel_id,
             'name':     new_name,
             })
-        return FromUrl('https://slack.com/api/channels.rename', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.rename', self._requests)(data=self.params).post()
 
     def set_purpose(self, channel_name, purpose):
         """ https://api.slack.com/methods/channels.setPurpose
@@ -189,7 +189,7 @@ class Channels(ApiBase):
             'channel': channel_id,
             'purpose': purpose,
             })
-        return FromUrl('https://slack.com/api/channels.setPurpose', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.setPurpose', self._requests)(data=self.params).post()
 
     def set_topic(self, channel_name, topic):
         """ https://api.slack.com/methods/channels.setTopic
@@ -199,7 +199,7 @@ class Channels(ApiBase):
             'channel': channel_id,
             'topic': topic,
             })
-        return FromUrl('https://slack.com/api/channels.setTopic', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.setTopic', self._requests)(data=self.params).post()
 
     def unarchive(self, channel_name):
         """ https://api.slack.com/methods/channels.unarchive
@@ -208,7 +208,7 @@ class Channels(ApiBase):
         self.params.update({
             'channel': channel_id,
             })
-        return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -298,7 +298,7 @@ class Chat(ApiBase):
             'channel': channel,
             'ts':      ts,
             })
-        return FromUrl('https://slack.com/api/chat.delete', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/chat.delete', self._requests)(data=self.params).post()
 
     def post_message(self, channel, text, **kwargs):
         """ https://api.slack.com/methods/chat.postMessage
@@ -309,7 +309,7 @@ class Chat(ApiBase):
             })
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/chat.postMessage', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/chat.postMessage', self._requests)(data=self.params).post()
 
     def update(self, channel, text, ts):
         """ https://api.slack.com/methods/chat.update
@@ -319,7 +319,7 @@ class Chat(ApiBase):
             'text':    text,
             'ts':      ts,
             })
-        return FromUrl('https://slack.com/api/chat.update', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/chat.update', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/chat$')] = Chat
 
 
@@ -344,7 +344,7 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/chat.update$')] = ChatUpd
 class Emoji(ApiBase):
     @property
     def list(self):
-        return FromUrl('https://slack.com/api/emoji.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/emoji.list', self._requests)(data=self.params).get()
 _url_to_api_object[re.compile(r'^https://slack.com/api/emoji$')] = Emoji
 
 
@@ -365,21 +365,21 @@ class Files(ApiBase):
             })
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/files.info', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/files.info', self._requests)(data=self.params).get()
 
     def list(self, **kwargs):
         """ https://api.slack.com/methods/files.list
         """
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/files.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/files.list', self._requests)(data=self.params).get()
 
     def upload(self, **kwargs):
         """ https://api.slack.com/methods/files.upload
         """
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/files.upload', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/files.upload', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/files$')] = Files
 
 
@@ -411,32 +411,32 @@ class Groups(ApiBase):
         """ https://api.slack.com/methods/groups.archive
         """
         self.params.update({'channel': channel})
-        return FromUrl('https://slack.com/api/groups.archive', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.archive', self._requests)(data=self.params).post()
 
     def close(self, channel):
         """ https://api.slack.com/methods/groups.close
         """
         self.params.update({'channel': channel})
-        return FromUrl('https://slack.com/api/groups.close', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.close', self._requests)(data=self.params).post()
 
     def create(self, name):
         """ https://api.slack.com/methods/groups.create
         """
         self.params.update({'channel': name})
-        return FromUrl('https://slack.com/api/groups.create', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.create', self._requests)(data=self.params).post()
 
     def list(self, **kwargs):
         """ https://api.slack.com/methods/groups.list
         """
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/groups.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.list', self._requests)(data=self.params).get()
 
     def create_child(self, channel):
         """ https://api.slack.com/methods/groups.createChild
         """
         self.params.update({'channel': channel})
-        return FromUrl('https://slack.com/api/groups.createChild', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.createChild', self._requests)(data=self.params).post()
 
     def history(self, channel, **kwargs):
         """ https://api.slack.com/methods/groups.history
@@ -444,7 +444,7 @@ class Groups(ApiBase):
         self.params.update({'channel': channel})
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/groups.history', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.history', self._requests)(data=self.params).get()
 
     def invite(self, channel, user):
         """ https://api.slack.com/methods/groups.invite
@@ -462,7 +462,7 @@ class Groups(ApiBase):
             'channel': channel,
             'user':    user,
             })
-        return FromUrl('https://slack.com/api/groups.kick', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.kick', self._requests)(data=self.params).post()
 
     def leave(self, channel):
         """ https://api.slack.com/methods/groups.leave
@@ -470,7 +470,7 @@ class Groups(ApiBase):
         self.params.update({
             'channel': channel,
             })
-        return FromUrl('https://slack.com/api/groups.leave', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.leave', self._requests)(data=self.params).post()
 
     def mark(self, channel, ts):
         """ https://api.slack.com/methods/groups.mark
@@ -479,7 +479,7 @@ class Groups(ApiBase):
             'channel': channel,
             'ts':      ts,
             })
-        return FromUrl('https://slack.com/api/groups.mark', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.mark', self._requests)(data=self.params).post()
 
     def open(self, channel):
         """ https://api.slack.com/methods/groups.open
@@ -487,7 +487,7 @@ class Groups(ApiBase):
         self.params.update({
             'channel': channel,
             })
-        return FromUrl('https://slack.com/api/groups.open', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.open', self._requests)(data=self.params).post()
 
     def rename(self, channel, new_name):
         """ https://api.slack.com/methods/groups.rename
@@ -496,7 +496,7 @@ class Groups(ApiBase):
             'channel': channel,
             'name':    new_name,
             })
-        return FromUrl('https://slack.com/api/groups.rename', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.rename', self._requests)(data=self.params).post()
 
     def set_purpose(self, channel, purpose):
         """ https://api.slack.com/methods/groups.setPurpose
@@ -505,7 +505,7 @@ class Groups(ApiBase):
             'channel': channel,
             'purpose': purpose,
             })
-        return FromUrl('https://slack.com/api/groups.setPurpose', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.setPurpose', self._requests)(data=self.params).post()
 
     def set_topic(self, channel, topic):
         """ https://api.slack.com/methods/groups.setTopic
@@ -514,7 +514,7 @@ class Groups(ApiBase):
             'channel': channel,
             'topic':   topic,
             })
-        return FromUrl('https://slack.com/api/groups.setTopic', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.setTopic', self._requests)(data=self.params).post()
 
     def unarchive(self, channel):
         """ https://api.slack.com/methods/groups.unarchive
@@ -522,7 +522,7 @@ class Groups(ApiBase):
         self.params.update({
             'channel': channel,
             })
-        return FromUrl('https://slack.com/api/groups.unarchive', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/groups.unarchive', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/groups$')] = Groups
 
 
@@ -608,7 +608,7 @@ class Im(ApiBase):
     def list(self):
         """ https://api.slack.com/methods/im.list
         """
-        return FromUrl('https://slack.com/api/im.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/im.list', self._requests)(data=self.params).get()
 
     def close(self, channel):
         """ https://api.slack.com/methods/im.close
@@ -616,7 +616,7 @@ class Im(ApiBase):
         self.params.update({
             'channel': channel,
             })
-        return FromUrl('https://slack.com/api/im.close', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/im.close', self._requests)(data=self.params).post()
 
     def history(self, channel, **kwargs):
         """ https://api.slack.com/methods/im.history
@@ -626,7 +626,7 @@ class Im(ApiBase):
             })
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/im.history', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/im.history', self._requests)(data=self.params).get()
 
     def mark(self, channel, ts):
         """ https://api.slack.com/methods/im.mark
@@ -635,7 +635,7 @@ class Im(ApiBase):
             'channel': channel,
             'ts':      ts,
             })
-        return FromUrl('https://slack.com/api/im.mark', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/im.mark', self._requests)(data=self.params).post()
 
     def open(self, user):
         """ https://api.slack.com/methods/im.history
@@ -643,7 +643,7 @@ class Im(ApiBase):
         self.params.update({
             'user': user,
             })
-        return FromUrl('https://slack.com/api/im.open', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/im.open', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/im$')] = Im
 
 
@@ -686,7 +686,7 @@ class OAuth(ApiBase):
             })
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/oauth.access', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/oauth.access', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/oauth$')] = OAuth
 
 
@@ -705,7 +705,7 @@ class Presence(ApiBase):
         self.params.update({
             'presence': presence,
             })
-        return FromUrl('https://slack.com/api/presence.set', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/presence.set', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/presence$')] = Presence
 
 
@@ -722,7 +722,7 @@ class Rtm(ApiBase):
     def start(self):
         """ https://api.slack.com/methods/rtm.start
         """
-        return FromUrl('https://slack.com/api/rtm.start', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/rtm.start', self._requests)(data=self.params).get()
 _url_to_api_object[re.compile(r'^https://slack.com/api/rtm$')] = Rtm
 
 
@@ -751,7 +751,7 @@ class SearchBase(ApiBase):
             })
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl(self.url, self._requests)(data=self.params)
+        return FromUrl(self.url, self._requests)(data=self.params).get()
 
 
 class Search(SearchBase):
@@ -799,7 +799,7 @@ class Stars(ApiBase):
         """
         if kwargs:
             self.params.update(kwargs)
-        return FromUrl('https://slack.com/api/stars.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/stars.list', self._requests)(data=self.params).get()
 _url_to_api_object[re.compile(r'^https://slack.com/api/stars$')] = Stars
 
 
@@ -818,13 +818,13 @@ class Users(ApiBase):
         self.params.update({
             'user': user,
             })
-        return FromUrl('https://slack.com/api/users.info', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/users.info', self._requests)(data=self.params).get()
 
     @property
     def list(self):
         """ https://api.slack.com/methods/users.list
         """
-        return FromUrl('https://slack.com/api/users.list', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/users.list', self._requests)(data=self.params).get()
 
     def set_active(self, user):
         """ https://api.slack.com/methods/users.setActive
@@ -832,7 +832,7 @@ class Users(ApiBase):
         self.params.update({
             'user': user,
             })
-        return FromUrl('https://slack.com/api/users.setActive', self._requests)(data=self.params)
+        return FromUrl('https://slack.com/api/users.setActive', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/users$')] = Users
 
 
