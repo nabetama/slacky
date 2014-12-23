@@ -2,6 +2,12 @@
 
 A Python package for Slack's [JSON REST API](https://api.slack.com/).
 
+## Installation
+
+```sh
+pip install slacky
+```
+
 ## Examples
 
 ```python
@@ -24,10 +30,3 @@ slack.users.list.json()['members']
 slack.files.upload(file='hello.png')
 
 ```
-
-## Installation
-
-```sh
-pip install slacky
-```
-
