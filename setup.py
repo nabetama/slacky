@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name='pyslack',
+    name='slacky',
     version="0.0.1",
     description="Package for Slack's API",
     author='Mao Nabeta',
     author_email='mao.nabeta@gmail.com',
-    url='https://github.com/nabetama/pyslack',
-    packages=['pyslack'],
+    url='https://github.com/nabetama/slacky',
+    packages=['slacky'],
     install_requires=['requests', 'six'],
     provides=['slack'],
     keywords='slack',
