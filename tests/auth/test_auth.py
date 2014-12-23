@@ -8,4 +8,4 @@ class TestAuth(TestSlack):
         assert self.slack.auth.test
 
     def test_auth_test_response(self):
-        assert self.slack.auth.test.get().status_code == 200
+        assert self.slack.auth.test.status_code == 200

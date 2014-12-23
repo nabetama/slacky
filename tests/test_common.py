@@ -2,7 +2,7 @@ import os, os.path
 import ConfigParser
 
 package = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-import slack
+from pyslack import PySlack
 
 
 class TestSlack(object):
@@ -28,5 +28,5 @@ class TestSlack(object):
         self.test_channel_name = self.config.get('Slack', 'test-channel-name')
 
     def set_up_slack(self):
-        self.slack = slack.Slack(self.access_token)
+        self.slack = PySlack(self.access_token)
 

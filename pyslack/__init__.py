@@ -10,7 +10,7 @@ import six
 from .requests import Requests, HttpForbidden
 from .rest import FromUrl
 
-__all__ = ('Slack',)
+__all__ = ('PySlack',)
 
 
 _http_errors = {}
@@ -78,7 +78,7 @@ class _requests(Requests):
         return super(_requests, self).put(url, data=data, **kwargs)
 
 
-class Slack(object):
+class PySlack(object):
     def __init__(self, token):
         self._requests = _requests()
         self.token = token
