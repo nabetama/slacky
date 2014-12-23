@@ -37,7 +37,7 @@ class ApiBase(object):
 
 class RestObject(ApiBase):
     def get(self):
-        return self._requests.get(self.url, data=self.params['data'])
+        return self._requests.get(self.url, params=self.params['data'])
 
     def post(self):
         return self._requests.post(self.url, params=self.params['data'])
