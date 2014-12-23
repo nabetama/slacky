@@ -1,0 +1,15 @@
+box: wercker/python
+build:
+  steps:
+    - nabetama/virtualenv:
+      name: set up virtualenv
+    - script:
+      name: 'echo python information'
+      code: |
+        echo "python version $(python --version) running"
+        echo "pip version $(pip --version) running"
+    - pip-install
+    - script:
+      name: 'py.test tests/ -v'
+      code: |
+        py.test tests/ -v
