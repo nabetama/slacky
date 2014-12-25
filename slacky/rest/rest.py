@@ -18,7 +18,7 @@ class FromUrl(object):
         try:
             for regix, klass in six.iteritems(_url_to_api_object):
                 if regix.match(self.url):
-                    return klass(self, **kwargs)  # 自分自身を渡す
+                    return klass(self, **kwargs)
             raise NotImplementedError
         except NotImplementedError as e:
             print regix.pattern, klass
