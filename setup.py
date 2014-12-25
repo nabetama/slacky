@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='slacky',
-    version="0.0.1",
+    version="0.1.0",
     description="Package for Slack's API",
     author='Mao Nabeta',
     author_email='mao.nabeta@gmail.com',
@@ -11,7 +11,7 @@ setup(
     install_requires=['requests', 'six'],
     provides=['slack'],
     keywords='slack',
-    classifiers=[ # https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
