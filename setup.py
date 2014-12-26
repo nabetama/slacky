@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='slacky',
-    version="0.1.0",
+    version="0.1.1",
     description="Package for Slack's API",
     author='Mao Nabeta',
     author_email='mao.nabeta@gmail.com',
