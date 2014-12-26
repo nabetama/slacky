@@ -1,5 +1,5 @@
 # coding: utf-8
-from __future__ import absolute_import, division
+from __future__ import absolute_import, division, print_function
 import json
 import time
 import warnings
@@ -49,7 +49,7 @@ class _requests(Requests):
 
     def request(self, method, url, **kwargs):
         if self.dump_reqs:
-            print >> sys.stderr, "REQUEST", method, url
+            print("REQUEST", method, url, file=sys.stderr)
         while True:
             try:
                 if self.rl_remaining <= 0:

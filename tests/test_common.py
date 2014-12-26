@@ -1,5 +1,8 @@
 import os, os.path
-import ConfigParser
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 package = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 from slacky import Slacky
@@ -13,7 +16,7 @@ class TestSlack(object):
     def set_up_config(self):
         search_paths = [os.path.expanduser('~/.slack'), '/etc/slack']
 
-        self.config = ConfigParser.ConfigParser()
+        self.config = configparser.ConfigParser()
         self.config.read(search_paths)
 
         if self.config.has_section('Slack'):

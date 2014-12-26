@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from __future__ import absolute_import, division
+from __future__ import absolute_import, division, print_function
 import json
 import re
 import six
@@ -21,8 +21,8 @@ class FromUrl(object):
                     return klass(self, **kwargs)
             raise NotImplementedError
         except NotImplementedError as e:
-            print regix.pattern, klass
-            print  e
+            print(e)
+            print(regix.pattern, klass)
 
     def __repr__(self):
         return "<%s url=%r>" % (type(self).__name__, self.url)
@@ -733,7 +733,7 @@ class RtmStart(RestObject):
         # TODO: Return json per interval.
         import time
         while True:
-            print self.get().json()
+            print(self.get().json())
             time.sleep(interval)
 
 _url_to_api_object[re.compile(r'^https://slack.com/api/rtm.start$')] = RtmStart
