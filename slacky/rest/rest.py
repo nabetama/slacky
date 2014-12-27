@@ -75,16 +75,15 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/auth.test$')] = AuthTest
 # Channels
 # ================================================================================================
 class Channels(ApiBase):
-    def get_channels(self, channel_name):
+    def all(self):
         channels = []
         for line in self.list.iter_lines():
-            if line:
+            if line:    # JSON string.
                 channels = json.loads(line).get('channels')
         return channels
 
     def get_channel_id(self, channel_name):
-        channels = self.get_channels(channel_name)
-        for channel in channels:
+        for channel in self.all():
             if channel['name'] == channel_name:
                 return channel['id']
         return ''
