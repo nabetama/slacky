@@ -23,8 +23,17 @@ slack.chat.post_message('#general', 'Hello from slacky')
 print slack.chat.post_message('#general', 'Hello from slacky').json()
 > => {u'ok': True,  u'ts': u'1234567890.000001',  u'channel': u'XXXXXXXXX'}
 
-# Get user list.
+# Create a channel where name is "slackers".
+slack.channels.create('slackers')
+
+# Create a private group.
+slack.groups.create('slackers')
+
+# Get users list.
 slack.users.list.json()['members']
+
+# Get user info.
+slack.users.get_info_by_name('nabetama')
 
 # Upload a file.
 slack.files.upload(file='hello.png')
