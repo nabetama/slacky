@@ -1,11 +1,11 @@
 """
 Slacky
------
+------
 
-A Python package for Slack's JSON REST API(https://api.slack.com/).
+A Python package for Slack's JSON REST API.
 
-Slacky is Simple.
-````````````
+Slacky is Simple
+````````````````
 
 Save in a hello.py:
 
@@ -16,7 +16,6 @@ Save in a hello.py:
 
     slacky.chat.post_message('#general', 'Hello World!!')
 
-`````````````````
 
 And run it:
 
@@ -31,7 +30,6 @@ Links
 * `website <https://github.com/nabetama/slacky>`_
 
 """
-
 from setuptools import setup
 
 setup(
