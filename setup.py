@@ -38,6 +38,7 @@ setup(
     name='slacky',
     version="0.1.21",
     description="Package for Slack's API",
+    long_description=__doc__,
     author='Mao Nabeta',
     author_email='mao.nabeta@gmail.com',
     url='https://github.com/nabetama/slacky',
