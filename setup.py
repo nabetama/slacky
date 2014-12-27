@@ -16,6 +16,8 @@ Save in a hello.py:
 
     slacky.chat.post_message('#general', 'Hello World!!')
 
+And Easy to Setup
+`````````````````
 
 And run it:
 
@@ -34,7 +36,7 @@ from setuptools import setup
 
 setup(
     name='slacky',
-    version="0.1.22",
+    version="0.1.22-dev",
     description="Package for Slack's API",
     long_description=__doc__,
     author='Mao Nabeta',
