@@ -833,6 +833,17 @@ class Users(ApiBase):
             'user': user,
             })
         return FromUrl('https://slack.com/api/users.setActive', self._requests)(data=self.params).post()
+
+    def get_info_by_name(self, user_name):
+        user_id = self.get_id_by_name(user_name)
+        return self.info(user_id)
+
+    def get_id_by_name(self, user_name):
+        members = self.list.json()['members']
+        for member in members:
+            if member.get('name') == user_name:
+                return member['id']
+        return ''
 _url_to_api_object[re.compile(r'^https://slack.com/api/users$')] = Users
 
 
