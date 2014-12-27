@@ -1,3 +1,37 @@
+"""
+Slacky
+-----
+
+A Python package for Slack's JSON REST API(https://api.slack.com/).
+
+Slacky is Simple.
+````````````
+
+Save in a hello.py:
+
+.. code:: python
+
+    from slacky import Slacky
+    slacky = Slacky(token='<Your slack api token>')
+
+    slacky.chat.post_message('#general', 'Hello World!!')
+
+`````````````````
+
+And run it:
+
+.. code:: bash
+
+    $ pip install slacky
+    $ python hello.py
+
+Links
+`````
+
+* `website <https://github.com/nabetama/slacky>`_
+
+"""
+
 from setuptools import setup
 
 setup(
