@@ -208,6 +208,29 @@ class Channels(ApiBase):
             'channel': channel_id,
             })
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params).post()
+
+    def time_line(self, channel_name, reverse=False):
+        result = []
+        messages = self.history(channel_name).json()['messages']
+        if reverse:
+            messages = sorted(messages, key=lambda x: x['ts'], reverse=True)
+        for message in messages:
+            result.append(self.formated(message))
+        return result
+
+    def formated(self, message):
+        user, text = '', ''
+        if message.get('user'):
+            user = message['user']
+        elif message.get('username'):
+            user = message['username']
+        else:
+            user = '????????'
+
+        return "@%s: %s"%(
+            user,
+            message['text'],
+            )
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
