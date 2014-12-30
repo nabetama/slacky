@@ -4,6 +4,8 @@ from __future__ import absolute_import, division
 import six
 
 class Message(object):
+    """ see: https://api.slack.com/events/message
+    """
     def __init__(self, message):
         params = message.copy()
         for k, v in six.iteritems(params):

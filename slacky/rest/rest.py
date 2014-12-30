@@ -5,6 +5,8 @@ import json
 import re
 import six
 
+from ..events import Message
+
 
 _url_to_api_object = {}
 
@@ -210,30 +212,19 @@ class Channels(ApiBase):
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params).post()
 
     def time_line(self, channel_name, reverse=False, **kwargs):
-        params = {}
-        result = []
+        time_line = self.__time_line(channel_name, reverse, **kwargs)
+        return time_line
+
+    def __time_line(self, channel_name, is_reverse, **kwargs):
+        params   = {}
+        messages = []
         if kwargs:
             self.params.update(kwargs)
-        messages = self.history(channel_name, kwargs).json()['messages']
-        if reverse:
-            messages = sorted(messages, key=lambda x: x['ts'], reverse=True)
-        for message in messages:
-            result.append(self.formated(message))
-        return result
-
-    def formated(self, message):
-        user, text = '', ''
-        if message.get('user'):
-            user = message['user']
-        elif message.get('username'):
-            user = message['username']
-        else:
-            user = '????????'
-
-        return "@%s: %s"%(
-            user,
-            message['text'],
-            )
+        lines = self.history(channel_name, **params).json()['messages']
+        lines = sorted(lines, key=lambda x: x['ts'], reverse=is_reverse)
+        for line in lines:
+            messages.append(Message(line))
+        return messages
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
