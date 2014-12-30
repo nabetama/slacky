@@ -209,9 +209,12 @@ class Channels(ApiBase):
             })
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params).post()
 
-    def time_line(self, channel_name, reverse=False):
+    def time_line(self, channel_name, reverse=False, **kwargs):
+        params = {}
         result = []
-        messages = self.history(channel_name).json()['messages']
+        if kwargs:
+            self.params.update(kwargs)
+        messages = self.history(channel_name, kwargs).json()['messages']
         if reverse:
             messages = sorted(messages, key=lambda x: x['ts'], reverse=True)
         for message in messages:
