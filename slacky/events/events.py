@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 import six
 
+
 class Message(object):
     """ see: https://api.slack.com/events/message
     """
