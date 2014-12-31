@@ -1,3 +1,3 @@
-from __future__ import absolute_import
+from  __future__ import absolute_import
 
-from .events import *
+from .events import Message

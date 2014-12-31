@@ -214,7 +214,7 @@ class Channels(ApiBase):
         return time_line
 
     def __time_line(self, channel_name, is_reverse, **kwargs):
-        from ..events.events import Message
+        from ..events import Message
         params   = {}
         messages = []
         if kwargs:
