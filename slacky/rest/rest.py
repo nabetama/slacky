@@ -209,11 +209,11 @@ class Channels(ApiBase):
             })
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params).post()
 
-    def time_line(self, channel_name, reverse=False, **kwargs):
-        time_line = self.__time_line(channel_name, reverse, **kwargs)
-        return time_line
+    def timeline(self, channel_name, reverse=False, **kwargs):
+        timeline = self.__timeline(channel_name, reverse, **kwargs)
+        return timeline
 
-    def __time_line(self, channel_name, is_reverse, **kwargs):
+    def __timeline(self, channel_name, is_reverse, **kwargs):
         from ..events import Message
         params   = {}
         messages = []
