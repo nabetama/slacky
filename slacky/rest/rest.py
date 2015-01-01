@@ -888,6 +888,13 @@ class Users(ApiBase):
         user_id = self.get_id_by_name(user_name)
         return self.info(user_id)
 
+    def get_name_by_id(self, user_id):
+        members = self.list.json()['members']
+        for member in members:
+            if member.get('id') == user_id:
+                return member['name']
+        return ''
+
     def get_id_by_name(self, user_name):
         members = self.list.json()['members']
         for member in members:
