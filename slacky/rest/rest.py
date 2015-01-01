@@ -896,6 +896,8 @@ class Users(ApiBase):
         return ''
 
     def get_id_by_name(self, user_name):
+        if not user_name:
+            return ''
         members = self.list.json()['members']
         for member in members:
             if member.get('name') == user_name:
