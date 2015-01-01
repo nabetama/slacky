@@ -23,6 +23,10 @@ slack.chat.post_message('#general', 'Hello from slacky')
 print slack.chat.post_message('#general', 'Hello from slacky').json()
 > => {u'ok': True,  u'ts': u'1234567890.000001',  u'channel': u'XXXXXXXXX'}
 
+# Get timeline at 'general' channel.
+for msg in slacky.timeline(channel_name='general', count=4):
+    print(msg)
+
 # Create a channel where name is "slackers".
 slack.channels.create('slackers')
 
