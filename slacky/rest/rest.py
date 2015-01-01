@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, print_function
 import json
 import re
 import six
@@ -208,6 +208,22 @@ class Channels(ApiBase):
             'channel': channel_id,
             })
         return FromUrl('https://slack.com/api/channels.unarchive', self._requests)(data=self.params).post()
+
+    def timeline(self, channel_name, reverse=False, **kwargs):
+        timeline = self.__timeline(channel_name, reverse, **kwargs)
+        return timeline
+
+    def __timeline(self, channel_name, is_reverse, **kwargs):
+        from ..events import Message
+        params   = {}
+        messages = []
+        if kwargs:
+            self.params.update(kwargs)
+        lines = self.history(channel_name, **params).json()['messages']
+        lines = sorted(lines, key=lambda x: x['ts'], reverse=is_reverse)
+        for line in lines:
+            messages.append(Message(line))
+        return messages
 _url_to_api_object[re.compile(r'^https://slack.com/api/channels$')] = Channels
 
 
@@ -872,7 +888,16 @@ class Users(ApiBase):
         user_id = self.get_id_by_name(user_name)
         return self.info(user_id)
 
+    def get_name_by_id(self, user_id):
+        members = self.list.json()['members']
+        for member in members:
+            if member.get('id') == user_id:
+                return member['name']
+        return ''
+
     def get_id_by_name(self, user_name):
+        if not user_name:
+            return ''
         members = self.list.json()['members']
         for member in members:
             if member.get('name') == user_name:
