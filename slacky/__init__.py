@@ -142,10 +142,10 @@ class Slacky(object):
     def users(self):
         return self.fromurl('https://slack.com/api/users', token=self.token)
 
-    def timeline(self, channel_name='general', count=100):
+    def timeline(self, channel_name='general', count=16):
         messages = self.channels.timeline(channel_name, count=count)
         for message in messages:
-            print("@%s: {%s}"%(
+            print("%10s: %s"%(
                 self.users.get_name_by_id(message.user),
                 message.text,
                 )
