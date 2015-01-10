@@ -16,6 +16,9 @@ Save in a hello.py:
 
     slacky.chat.post_message('#general', 'Hello World!!')
 
+    # '#' is not necessary with channel name.
+    slacky.chat.post_message('general', 'Hello World!!')
+
 And Easy to Setup
 `````````````````
 
@@ -36,7 +39,7 @@ from setuptools import setup
 
 setup(
     name='slacky',
-    version="0.1.24-dev",
+    version="0.1.26-dev",
     description="Package for Slack's API",
     long_description=__doc__,
     author='Mao Nabeta',
