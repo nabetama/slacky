@@ -18,9 +18,11 @@ slack = Slacky(token='<Your slack api token>')
 
 # Send a message to #general channel.
 slack.chat.post_message('#general', 'Hello from slacky')
+# '#' is not necessary with channel name.
+slack.chat.post_message('general', 'Hello from slacky')
 
 # If you want a JSON result.
-print slack.chat.post_message('#general', 'Hello from slacky').json()
+print slack.chat.post_message('general', 'Hello from slacky').json()
 > => {u'ok': True,  u'ts': u'1234567890.000001',  u'channel': u'XXXXXXXXX'}
 
 # Get timeline at 'general' channel.
