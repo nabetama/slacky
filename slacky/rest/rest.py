@@ -318,6 +318,8 @@ class Chat(ApiBase):
     def post_message(self, channel, text, **kwargs):
         """ https://api.slack.com/methods/chat.postMessage
         """
+        if not channel.startswith('#'):
+            channel = '#' + channel
         self.params.update({
             'channel': channel,
             'text':    text,
