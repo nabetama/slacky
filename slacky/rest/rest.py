@@ -864,6 +864,25 @@ _url_to_api_object[re.compile(r'^https://slack.com/api/stars.list$')] = StarsLis
 # users
 # ================================================================================================
 class Users(ApiBase):
+    def get_presence(self, user_name):
+        """ https://api.slack.com/methods/users.getPresence
+        """
+        user_id = self.get_id_by_name(user_name)
+        self.params.update({
+            'user': user_id,
+            })
+        return FromUrl('https://slack.com/api/users.getPresence', self._requests)(data=self.params).get()
+
+    def set_presence(self, presence):
+        """ https://api.slack.com/methods/users.setPresence
+        """
+        if presence not in ['auto', 'away']:
+            presence = 'auto'
+        self.params.update({
+            'presence': presence,
+            })
+        return FromUrl('https://slack.com/api/users.setPresence', self._requests)(data=self.params).post()
+
     def info(self, user):
         """ https://api.slack.com/methods/users.info
         """
@@ -906,6 +925,16 @@ class Users(ApiBase):
                 return member['id']
         return ''
 _url_to_api_object[re.compile(r'^https://slack.com/api/users$')] = Users
+
+
+class UsersGetPresence(RestObject):
+    pass
+_url_to_api_object[re.compile(r'^https://slack.com/api/users.getPresence$')] = UsersGetPresence
+
+
+class UsersSetPresence(RestObject):
+    pass
+_url_to_api_object[re.compile(r'^https://slack.com/api/users.setPresence$')] = UsersSetPresence
 
 
 class UsersInfo(RestObject):
