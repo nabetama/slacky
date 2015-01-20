@@ -39,7 +39,7 @@ from setuptools import setup
 
 setup(
     name='slacky',
-    version="0.1.26-dev",
+    version="0.1.3",
     description="Package for Slack's API",
     long_description=__doc__,
     author='Mao Nabeta',
