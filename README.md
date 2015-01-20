@@ -1,3 +1,5 @@
+[![wercker status](https://app.wercker.com/status/5d1ccee5911286b664b05d1a697987d2/m "wercker status")](https://app.wercker.com/project/bykey/5d1ccee5911286b664b05d1a697987d2)
+
 # slacky
 
 A Python package for Slack's [JSON REST API](https://api.slack.com/).
@@ -46,4 +48,3 @@ slack.files.upload(file='hello.png')
 
 ```
 
-[![wercker status](https://app.wercker.com/status/5d1ccee5911286b664b05d1a697987d2/m "wercker status")](https://app.wercker.com/project/bykey/5d1ccee5911286b664b05d1a697987d2)
