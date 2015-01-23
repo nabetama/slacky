@@ -1,6 +1,7 @@
 import pytest
 from tests.test_common import TestSlack
 
+
 class TestChannels(TestSlack):
     def test_channels(self):
         assert self.slack.channels

@@ -1,4 +1,5 @@
-import os, os.path
+import os
+import os.path
 try:
     import configparser
 except ImportError:
@@ -20,9 +21,9 @@ class TestSlack(object):
         self.config.read(search_paths)
 
         if self.config.has_section('Slack'):
-            self.access_token      = self.config.get('Slack', 'token')
-            self.test_channel      = self.config.get('Slack', 'test-channel')
-            self.test_user         = self.config.get('Slack', 'test-user')
+            self.access_token = self.config.get('Slack', 'token')
+            self.test_channel = self.config.get('Slack', 'test-channel')
+            self.test_user = self.config.get('Slack', 'test-user')
             self.test_channel_name = self.config.get('Slack', 'test-channel-name')
         elif 'SLACK_TOKEN' in os.environ:
             self.access_token = os.environ['SLACK_TOKEN']
@@ -32,4 +33,3 @@ class TestSlack(object):
 
     def set_up_slack(self):
         self.slack = Slacky(self.access_token)
-

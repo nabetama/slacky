@@ -1,5 +1,6 @@
 from tests.test_common import TestSlack
 
+
 class TestAuth(TestSlack):
     def test_auth(self):
         assert self.slack.auth

@@ -1,5 +1,6 @@
 from tests.test_common import TestSlack
 
+
 class TestApi(TestSlack):
     def test_api(self):
         assert self.slack.api
