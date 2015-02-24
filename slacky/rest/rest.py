@@ -397,6 +397,13 @@ class Files(ApiBase):
         if kwargs:
             self.params.update(kwargs)
         return FromUrl('https://slack.com/api/files.upload', self._requests)(data=self.params).post()
+
+    def delete(self, **kwargs):
+        """ https://api.slack.com/methods/files.delete
+        """
+        if kwargs:
+            self.params.update(kwargs)
+        return FromUrl('https://slack.com/api/files.delete', self._requests)(data=self.params).post()
 _url_to_api_object[re.compile(r'^https://slack.com/api/files$')] = Files
 
 
@@ -419,6 +426,15 @@ class FilesUpload(RestObject):
         return self._requests.post(self.url, params=self.params['data'], files=files)
 _url_to_api_object[re.compile(r'^https://slack.com/api/files.upload$')] = FilesUpload
 
+
+class FilesDelete(RestObject):
+    def post(self):
+        """ @override
+        """
+        files = {}
+        files = {'file': open(self.params['data']['file'])}
+        return self._requests.post(self.url, params=self.params['data'], files=files)
+_url_to_api_object[re.compile(r'^https://slack.com/api/files.delete$')] = FilesDelete
 
 # ================================================================================================
 # groups
