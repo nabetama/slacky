@@ -46,6 +46,7 @@ setup(
     author_email='mao.nabeta@gmail.com',
     url='https://github.com/nabetama/slacky',
     packages=['slacky'],
+    include_package_data=True,
     install_requires=['requests', 'six'],
     provides=['slack'],
     keywords='slack',
