@@ -35,7 +35,7 @@ Links
 * `website <https://github.com/nabetama/slacky>`_
 
 """
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='slacky',
@@ -45,7 +45,7 @@ setup(
     author='Mao Nabeta',
     author_email='mao.nabeta@gmail.com',
     url='https://github.com/nabetama/slacky',
-    packages=['slacky'],
+    packages=find_packages(),
     include_package_data=True,
     install_requires=['requests', 'six'],
     provides=['slack'],
