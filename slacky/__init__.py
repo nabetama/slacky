@@ -152,3 +152,11 @@ class Slacky(object):
                     )
                 )
         return result
+
+    def rtm_connect(self):
+        response = self.rtm.start
+        self._parse_login_data(response.json())
+
+    def _parse_login_data(self, login_data):
+        self.login_data = login_data.copy()
+        # XXX: continue
