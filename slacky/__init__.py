@@ -7,6 +7,7 @@ import sys
 import os
 import datetime
 import six
+from websocket import create_connection
 from .requests import Requests, HttpForbidden
 from .rest import FromUrl
 
@@ -159,4 +160,20 @@ class Slacky(object):
 
     def _parse_login_data(self, login_data):
         self.login_data = login_data.copy()
-        # XXX: continue
+        self.team_domain = self.login_data['team']['domain']
+        self.user_name = self.login_data['self']['name']
+        self.users = dict((u['id'], u) for u in self.login_data['users'])
+        # TODO: parse channel data
+        # self.parse_login_data(self.login_data['channels'])
+        # self.parse_login_data(self.login_data['groups'])
+        # self.parse_login_data(self.login_data['ims'])
+
+        try:
+            self.websocket = create_connection(self.login_data['url'])
+            self.websocket.sock.blocking(0)
+        except:
+            # TODO: make original exception
+            raise Exception
+
+#     def parse_channel_data(self, channel_data):
+#         pass
